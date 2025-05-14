@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:blasting",
+  "cookingtime": 100,
+  "experience": 0.9,
+  "ingredient": {
+    "item": "tutorialmod:almandine_ore"
+  },
+  "result": "tutorialmod:almandine"
+}

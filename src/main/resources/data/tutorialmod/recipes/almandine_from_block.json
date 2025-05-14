@@ -1,0 +1,12 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "tutorialmod:almandine_block"
+    }
+  ],
+  "result": {
+    "item": "tutorialmod:almandine",
+    "count": 9
+  }
+}

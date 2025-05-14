@@ -1,0 +1,58 @@
+{
+  "item.tutorialmod.almandine": "Almandine",
+  "item.tutorialmod.impure_almandine": "Impure Almandine",
+  "item.tutorialmod.eight_ball": "Eight Ball",
+  "item.tutorialmod.jurema_seeds": "Jurema Seeds",
+  "item.tutorialmod.jurema_leaves": "Jurema Leaves",
+  "item.tutorialmod.jurema_bark": "Jurema Bark",
+  "item.tutorialmod.tropical_water_bucket": "Tropical Water Bucket",
+  "item.tutorialmod.great_katana": "Great Katana",
+  "item.tutorialmod.genet_spawn_egg": "Genet Spawn Egg",
+  "item.tutorialmod.almandine_pickaxe": "Almandine Pickaxe",
+
+  "block.tutorialmod.almandine_block": "Block of Almandine",
+  "block.tutorialmod.almandine_ore": "Almandine Ore",
+  "block.tutorialmod.deepslate_almandine_ore": "Deepslate Almandine Ore",
+  "block.tutorialmod.nether_almandine_ore": "Nether Almandine Ore",
+  "block.tutorialmod.endstone_almandine_ore": "Endstone Almandine Ore",
+  "block.tutorialmod.jumpy_block": "Jumpy Block",
+  "block.tutorialmod.almandine_lamp": "Almandine Lamp",
+  "block.tutorialmod.jurema_crop": "Jurema Crop",
+  "block.tutorialmod.tropical_water_block": "Tropical Water",
+  "block.tutorialmod.drying_tray": "Drying Tray",
+  "block.tutorialmod.larch_log": "Larch Log",
+  "block.tutorialmod.larch_wood": "Larch Wood",
+  "block.tutorialmod.larch_planks": "Larch Planks",
+  "block.tutorialmod.stripped_larch_log": "Stripped Larch Log",
+  "block.tutorialmod.stripped_larch_wood": "Stripped Larch Wood",
+  "block.tutorialmod.larch_sapling": "Larch Sapling",
+  "block.tutorialmod.larch_leaves": "Larch Leaves",
+  "block.tutorialmod.morning_glory": "Morning Glory",
+  "block.tutorialmod.potted_morning_glory": "Potted Morning Glory",
+
+
+
+  "tile.tutorialmod.drying_tray": "Drying Tray",
+
+  "tooltip.tutorialmod.eightball_info": "Right-Click to get random number",
+  "tooltip.tutorialmod.eightball_hint": "Press SHIFT for more info",
+  "tooltip.tutorialmod.jurema_leaves_hint": "Brews into a healing tea",
+  "tooltip.tutorialmod.jurema_seeds_hint": "Mimosa Hostilis/Tenuiflora seeds",
+  "tooltip.tutorialmod.jurema_bark_hint": "Mimosa Hostilis/Tenuiflora, can be dried for further use",
+  "tooltip.tutorialmod.dried_jurema_bark_hint": "Mimosa Hostilis/Tenuiflora, DMT can be extracted from this",
+  "tooltip.tutorialmod.liquid.amount.with.capacity": "%s / %s mB",
+  "tooltip.tutorialmod.liquid.amount": "%s mB",
+
+  "itemGroup.tutorialtab": "Obscure Jewelry Tab",
+
+  "entity.minecraft.villager.tutorialmod.jew": "Jew",
+
+  "key.category.tutorialmod.tutorial": "Tutorial Mod",
+  "key.tutorialmod.drink_water": "Drink Water",
+
+  "message.tutorialmod.drink_water": "Drinking water...",
+  "message.tutorialmod.no_water": "No water nearby!",
+  "message.tutorialmod.hurt_sheep": " hurt a Sheep!",
+
+  "jei.compat.tutorialmod.title": "Drying Tray"
+}

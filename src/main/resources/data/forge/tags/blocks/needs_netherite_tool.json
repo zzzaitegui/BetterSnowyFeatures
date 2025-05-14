@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "tutorialmod:deepslate_almandine_ore",
+    "tutorialmod:almandine_ore",
+    "tutorialmod:nether_almandine_ore",
+    "tutorialmod:endstone_almandine_ore"
+  ]
+}

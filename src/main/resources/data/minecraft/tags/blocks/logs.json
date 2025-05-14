@@ -1,0 +1,9 @@
+{
+  "replace": false,
+  "values": [
+    "tutorialmod:larch_log",
+    "tutorialmod:larch_wood",
+    "tutorialmod:stripped_larch_log",
+    "tutorialmod:stripped_larch_wood"
+  ]
+}

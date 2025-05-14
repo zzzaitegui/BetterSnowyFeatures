@@ -1,0 +1,9 @@
+{
+  "type": "minecraft:smelting",
+  "cookingtime": 200,
+  "experience": 0.9,
+  "ingredient": {
+    "item": "tutorialmod:deepslate_almandine_ore"
+  },
+  "result": "tutorialmod:almandine"
+}

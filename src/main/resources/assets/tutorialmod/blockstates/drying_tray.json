@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "tutorialmod:block/drying_tray"
+    },
+    "facing=south": {
+      "model": "tutorialmod:block/drying_tray",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "tutorialmod:block/drying_tray",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "tutorialmod:block/drying_tray",
+      "y": 90
+    }
+  }
+}
