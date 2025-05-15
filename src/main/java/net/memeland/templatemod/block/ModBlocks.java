@@ -1,6 +1,8 @@
 package net.memeland.templatemod.block;
 
 import net.memeland.templatemod.TemplateMod;
+import net.memeland.templatemod.item.ModCreativeModeTab;
+import net.memeland.templatemod.item.ModItems;
 import net.minecraft.world.item.BlockItem;
 import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
@@ -25,7 +27,7 @@ public class ModBlocks {
                     .strength(4.5f)
                     .requiresCorrectToolForDrops()
                     .sound(SoundType.AMETHYST)),
-            ModCreativeModeTab.TUTORIAL_TAB);
+            ModCreativeModeTab.TEMPLATE_TAB);
 
     // This helper method registers a block with Minecraft, takes a name supplier (creates a block with properties) and tab
     // It also calls the registerBlockItem to register its related item form
@@ -37,8 +39,6 @@ public class ModBlocks {
 
     //This helper method register an item form of a block, uses ModItems registry to create a BlockItem that represents the block in inventory
     private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, Supplier<T> block, CreativeModeTab tab) {
-
-
         return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
     }
 
