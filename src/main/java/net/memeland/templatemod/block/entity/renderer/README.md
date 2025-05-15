@@ -1,0 +1,1 @@
+Custom renderer for the block entity.

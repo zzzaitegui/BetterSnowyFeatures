@@ -1,0 +1,1 @@
+Folder for the code that generates json files fir loot tables, recipes, blockstates and models

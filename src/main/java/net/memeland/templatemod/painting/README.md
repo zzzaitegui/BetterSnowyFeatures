@@ -1,0 +1,1 @@
+Custom paintings folder

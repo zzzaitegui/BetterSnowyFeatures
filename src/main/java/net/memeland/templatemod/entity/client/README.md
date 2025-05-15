@@ -1,0 +1,1 @@
+Folder for the parts of the entity that are only for the client

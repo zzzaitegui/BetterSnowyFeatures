@@ -1,0 +1,1 @@
+Painting textures folder

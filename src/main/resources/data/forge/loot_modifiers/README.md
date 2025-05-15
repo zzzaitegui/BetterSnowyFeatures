@@ -1,0 +1,1 @@
+Here you add/register whatever loot modifiers you made in the data/modname/loot_modifiers
