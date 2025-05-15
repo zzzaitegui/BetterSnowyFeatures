@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cross",
-  "textures": {
-    "cross": "tutorialmod:block/morning_glory"
-  },
-  "render_type": "cutout"
-}

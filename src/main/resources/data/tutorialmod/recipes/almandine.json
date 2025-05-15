@@ -1,8 +1,0 @@
-{
-  "type": "minecraft:stonecutting",
-  "count": 1,
-  "ingredient": {
-    "item": "tutorialmod:impure_almandine"
-  },
-  "result": "tutorialmod:almandine"
-}

@@ -2,24 +2,24 @@ modLoader="javafml"
 loaderVersion="${loader_version_range}"
 license="MIT License"
 [[mods]]
-modId="tutorialmod"
+modId="templatemod"
 version="0.0.1-1.19.2"
-displayName="Tutorial Mod"
+displayName="Template Mod"
 authors="zzzaitegui"
-description='''A Forge 1.19.2 mod tutorial.'''
-[[dependencies.tutorialmod]]
+description='''A Forge 1.19.2 template mod.'''
+[[dependencies.templatemod]]
 modId="forge"
 mandatory=true
 versionRange="${forge_version_range}"
 ordering="NONE"
 side="BOTH"
-[[dependencies.tutorialmod]]
+[[dependencies.templatemod]]
 modId="minecraft"
 mandatory=true
 versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
-[[dependencies.tutorialmod]]
+[[dependencies.templatemod]]
 modId="geckolib3"
 mandatory=true
 versionRange="[3.1.40,)"

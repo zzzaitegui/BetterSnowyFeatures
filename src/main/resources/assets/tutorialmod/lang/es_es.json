@@ -1,33 +1,20 @@
 {
   "item.tutorialmod.almandine": "Almandita",
-  "item.tutorialmod.impure_almandine": "Almandita bruta",
-  "item.tutorialmod.eight_ball": "Bola Ocho",
-  "item.tutorialmod.jurema_seeds": "Semillas de Mimosa",
-  "item.tutorialmod.jurema_leaves": "Hojas de Mimosa",
-  "item.tutorialmod.jurema_bark": "Corteza de Mimosa",
 
-  "block.tutorialmod.almandine_block": "Bloque de Almandita",
-  "block.tutorialmod.almandine_ore": "Mena de Almandita",
-  "block.tutorialmod.deepslate_almandine_ore": "Mena de Almandita de pizarra profunda",
-  "block.tutorialmod.nether_almandine_ore": "Mena de Almandita del Nether",
-  "block.tutorialmod.endstone_almandine_ore": "Mena de Almandita de piedra del End",
-  "block.tutorialmod.jumpy_block": "Bloque saltarín",
-  "block.tutorialmod.almandine_lamp": "Lámpara de Almandita",
-  "block.tutorialmod.jurema_crop": "Cultivo de Mimosa",
+  "block.templatemod.almandine_block": "Bloque de Almandita",
 
-  "tooltip.tutorialmod.eightball_info": "Click derecho para generar un número aleatorio",
-  "tooltip.tutorialmod.eightball_hint": "Presiona SHIFT para más info",
-  "tooltip.tutorialmod.jurema_leaves_hint": "Se puede hervir para conseguir un té curativo",
-  "tooltip.tutorialmod.jurema_seeds_hint": "Semillas Mimosa Hostilis/Tenuiflora",
-  "tooltip.tutorialmod.jurema_bark_hint": "Mimosa Hostilis/Tenuiflora, se puede extraer DMT de esta planta",
+  "tile.templatemod.drying_tray": "Bandeja de secado",
 
-  "itemGroup.tutorialtab": "Obscure Jewelry Tab",
+  "tooltip.templatemod.eightball_info": "Click derecho para generar un número aleatorio",
 
-  "entity.minecraft.villager.tutorialmod.jew": "Judío",
+  "itemGroup.templatetab": "Obscure Jewelry Tab",
 
-  "key.category.tutorialmod.tutorial": "Tutorial Mod",
-  "key.tutorialmod.drink_water": "Beber agua",
+  "entity.minecraft.villager.templatemod.jew": "Judío",
 
-  "message.tutorialmod.drink_water": "Bebiendo agua...",
-  "message.tutorialmod.no_water": "¡No hay agua cerca!"
+  "key.category.templatemod.tutorial": "Tutorial Mod",
+  "key.templatemod.drink_water": "Beber agua",
+
+  "message.templatemod.hurt_sheep": "Heriste una oveja!",
+
+  "jei.compat.templatemod.title": "Bandeja de secado"
 }

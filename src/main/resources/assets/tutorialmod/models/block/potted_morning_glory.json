@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/flower_pot_cross",
-  "textures": {
-    "plant": "tutorialmod:block/morning_glory"
-  },
-  "render_type": "cutout"
-}

@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/crop",
-  "textures": {
-    "crop": "tutorialmod:block/jurema_stage2"
-  },
-  "render_type": "cutout"
-}

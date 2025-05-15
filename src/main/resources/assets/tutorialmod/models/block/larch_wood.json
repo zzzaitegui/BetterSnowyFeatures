@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/cube_column",
-  "textures": {
-    "end": "tutorialmod:block/larch_wood",
-    "side": "tutorialmod:block/larch_wood"
-  }
-}

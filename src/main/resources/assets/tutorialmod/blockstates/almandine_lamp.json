@@ -1,6 +1,0 @@
-{
-  "variants": {
-    "lit=true": { "model":  "tutorialmod:block/almandine_lamp_on" },
-    "lit=false": { "model":  "tutorialmod:block/almandine_lamp_off" }
-  }
-}
