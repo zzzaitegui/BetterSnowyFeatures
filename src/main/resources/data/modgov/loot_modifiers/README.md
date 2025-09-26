@@ -1,1 +1,0 @@
-For adding custom loot modifiers to existing blocks or entities

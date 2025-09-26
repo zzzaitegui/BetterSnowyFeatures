@@ -1,1 +1,0 @@
-Declaring the block POI that you made a job site
