@@ -1,0 +1,19 @@
+{
+  "variants": {
+    "facing=north": {
+      "model": "modgov:block/bulletin_board"
+    },
+    "facing=south": {
+      "model": "modgov:block/bulletin_board",
+      "y": 180
+    },
+    "facing=west": {
+      "model": "modgov:block/bulletin_board",
+      "y": 270
+    },
+    "facing=east": {
+      "model": "modgov:block/bulletin_board",
+      "y": 90
+    }
+  }
+}

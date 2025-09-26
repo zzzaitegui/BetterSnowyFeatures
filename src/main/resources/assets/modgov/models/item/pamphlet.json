@@ -1,0 +1,104 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "modgov:item/pamphlet"
+  },
+  "overrides": [
+    {
+      "predicate": {
+        "custom_model_data": 1
+      },
+      "model": "modgov:item/pamphlet_white"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 2
+      },
+      "model": "modgov:item/pamphlet_orange"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 3
+      },
+      "model": "modgov:item/pamphlet_magenta"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 4
+      },
+      "model": "modgov:item/pamphlet_light_blue"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 5
+      },
+      "model": "modgov:item/pamphlet_yellow"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 6
+      },
+      "model": "modgov:item/pamphlet_lime"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 7
+      },
+      "model": "modgov:item/pamphlet_pink"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 8
+      },
+      "model": "modgov:item/pamphlet_gray"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 9
+      },
+      "model": "modgov:item/pamphlet_light_gray"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 10
+      },
+      "model": "modgov:item/pamphlet_cyan"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 11
+      },
+      "model": "modgov:item/pamphlet_purple"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 12
+      },
+      "model": "modgov:item/pamphlet_blue"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 13
+      },
+      "model": "modgov:item/pamphlet_brown"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 14
+      },
+      "model": "modgov:item/pamphlet_green"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 15
+      },
+      "model": "modgov:item/pamphlet_red"
+    },
+    {
+      "predicate": {
+        "custom_model_data": 16
+      },
+      "model": "modgov:item/pamphlet_black"
+    }
+  ]
+}

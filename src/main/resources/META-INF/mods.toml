@@ -1,27 +1,29 @@
 modLoader="javafml"
 loaderVersion="${loader_version_range}"
-license="MIT License"
+license="MIT"
+# logoFile="logo.png" # NO LOGO YET
+
 [[mods]]
-modId="templatemod"
-version="0.0.1-1.19.2"
-displayName="Template Mod"
+modId="modgov"
+version="1.0.2-1.20.1"
+displayName="Mod.gov"
+# logoFile="logo.png" # NO LOGO YET
 authors="zzzaitegui"
-description='''A Forge 1.19.2 template mod.'''
-[[dependencies.templatemod]]
+description='''
+A comprehensive elections and voting mod for Minecraft 1.20.1 roleplay servers.
+Features political party registration, elections, voting system, ID cards, and pamphlets for creating basic democratic gameplay.
+'''
+
+[[dependencies.modgov]]
 modId="forge"
 mandatory=true
 versionRange="${forge_version_range}"
 ordering="NONE"
 side="BOTH"
-[[dependencies.templatemod]]
+
+[[dependencies.modgov]]
 modId="minecraft"
 mandatory=true
 versionRange="${minecraft_version_range}"
-ordering="NONE"
-side="BOTH"
-[[dependencies.templatemod]]
-modId="geckolib3"
-mandatory=true
-versionRange="[3.1.40,)"
 ordering="NONE"
 side="BOTH"

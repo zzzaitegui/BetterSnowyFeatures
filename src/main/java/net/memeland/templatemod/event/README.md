@@ -1,1 +1,0 @@
-Client and mod events folder
