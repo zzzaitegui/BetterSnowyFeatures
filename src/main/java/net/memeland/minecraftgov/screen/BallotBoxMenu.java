@@ -23,7 +23,7 @@ public class BallotBoxMenu extends AbstractContainerMenu {
     // Server-side constructor
     public BallotBoxMenu(int pContainerId, Inventory playerInv, BallotBoxBlockEntity blockEntity, BlockPos pos) {
         super(ModMenuTypes.BALLOT_BOX_MENU.get(), pContainerId);
-        this.levelAccess = ContainerLevelAccess.create(playerInv.player.getLevel(), pos);
+        this.levelAccess = ContainerLevelAccess.create(playerInv.player.level(), pos);
         this.blockEntity = blockEntity;
         this.blockPos = pos;
 
@@ -31,12 +31,12 @@ public class BallotBoxMenu extends AbstractContainerMenu {
         addPlayerHotbar(playerInv);
     }
 
-    // Client-side constructor (receives BlockPos from server via FriendlyByteBuf)
+    // Client-side constructor
     public BallotBoxMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         super(ModMenuTypes.BALLOT_BOX_MENU.get(), id);
         this.blockEntity = null;
         this.blockPos = extraData.readBlockPos();
-        this.levelAccess = ContainerLevelAccess.create(inv.player.getLevel(), this.blockPos);
+        this.levelAccess = ContainerLevelAccess.create(inv.player.level(), this.blockPos);
 
         addBallotBoxSlots(new ItemStackHandler(2));
         addPlayerHotbar(inv);
@@ -64,20 +64,16 @@ public class BallotBoxMenu extends AbstractContainerMenu {
                 if (!mayPlace(stack)) {
                     return stack;
                 }
-                // Only insert 1 item even if stack is larger
                 ItemStack toInsert = stack.copy();
                 toInsert.setCount(1);
 
                 ItemStack remainder = super.safeInsert(toInsert);
 
-                // Return the original stack with count reduced by what was actually inserted
                 if (remainder.isEmpty()) {
-                    // Successfully inserted 1 item
                     ItemStack result = stack.copy();
                     result.shrink(1);
                     return result;
                 } else {
-                    // Couldn't insert, full slot
                     return stack;
                 }
             }

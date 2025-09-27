@@ -1,8 +1,8 @@
 package net.memeland.minecraftgov.screen.widgets;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Font;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.EditBox;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.Mth;
@@ -30,12 +30,10 @@ public class SimpleMultilineEditBox extends EditBox {
             return false;
         }
 
-        // Check total length
         if (this.getValue().length() >= this.maxLength) {
             return false;
         }
 
-        // Check if adding this character would make the current line too wide
         String[] lines = getLines();
         int cursorPos = getCursorPosition();
         CursorInfo cursorInfo = getCursorLineAndPosition(cursorPos, lines);
@@ -47,9 +45,8 @@ public class SimpleMultilineEditBox extends EditBox {
                     currentLine.substring(cursorInfo.positionInLine);
 
             Font font = Minecraft.getInstance().font;
-            int maxLineWidth = this.width - 12; // Account for padding
+            int maxLineWidth = this.getWidth() - 12;
 
-            // If the line would be too wide, don't allow the character
             if (font.width(lineWithNewChar) > maxLineWidth) {
                 return false;
             }
@@ -64,21 +61,18 @@ public class SimpleMultilineEditBox extends EditBox {
             return false;
         }
 
-        // Handle Delete key manually (keyCode 261)
-        if (keyCode == 261) {
+        if (keyCode == 261) { // Delete
             int cursorPos = getCursorPosition();
             String currentText = this.getValue();
 
             if (cursorPos < currentText.length()) {
                 String newText = currentText.substring(0, cursorPos) + currentText.substring(cursorPos + 1);
                 this.setValue(newText);
-                // Cursor position stays the same
             }
             return true;
         }
 
-        // Handle Backspace key manually (keyCode 259)
-        if (keyCode == 259) {
+        if (keyCode == 259) {// Backspace
             int cursorPos = getCursorPosition();
             String currentText = this.getValue();
 
@@ -90,7 +84,6 @@ public class SimpleMultilineEditBox extends EditBox {
             return true;
         }
 
-        // Handle Enter key to add newlines
         if (keyCode == 257 || keyCode == 13) {
             if (getLines().length < maxLines) {
                 int cursorPos = getCursorPosition();
@@ -103,7 +96,6 @@ public class SimpleMultilineEditBox extends EditBox {
             return true;
         }
 
-        // Handle Tab key for indentation (but check line width)
         if (keyCode == 258) {
             String[] lines = getLines();
             int cursorPos = getCursorPosition();
@@ -116,11 +108,9 @@ public class SimpleMultilineEditBox extends EditBox {
                         currentLine.substring(cursorInfo.positionInLine);
 
                 Font font = Minecraft.getInstance().font;
-                int maxLineWidth = this.width - 12;
+                int maxLineWidth = this.getWidth() - 12;
 
-                // Only add spaces if line won't be too wide
                 if (font.width(lineWithSpaces) <= maxLineWidth) {
-                    // Insert spaces manually instead of using charTyped to avoid width conflicts
                     int pos = getCursorPosition();
                     String text = this.getValue();
                     String newText = text.substring(0, pos) + "    " + text.substring(pos);
@@ -131,7 +121,6 @@ public class SimpleMultilineEditBox extends EditBox {
             return true;
         }
 
-        // Handle up/down arrow keys for line navigation
         if (keyCode == 265) { // Up arrow
             moveVertically(-1);
             return true;
@@ -141,8 +130,6 @@ public class SimpleMultilineEditBox extends EditBox {
             return true;
         }
 
-        // For other keys (left/right arrows, home, end, etc.), let parent handle them
-        // but NOT delete/backspace which we handle above
         return super.keyPressed(keyCode, scanCode, modifiers);
     }
 
@@ -160,7 +147,7 @@ public class SimpleMultilineEditBox extends EditBox {
 
             // Limit position to what can actually be displayed
             Font font = Minecraft.getInstance().font;
-            int maxLineWidth = this.width - 12;
+            int maxLineWidth = this.getWidth() - 12;
             String displayableText = font.plainSubstrByWidth(targetLineText, maxLineWidth);
 
             int newPositionInLine = Math.min(currentInfo.positionInLine, displayableText.length());
@@ -176,63 +163,58 @@ public class SimpleMultilineEditBox extends EditBox {
     }
 
     @Override
-    public void renderButton(PoseStack poseStack, int mouseX, int mouseY, float partialTick) {
+    public void renderWidget(GuiGraphics guiGraphics, int mouseX, int mouseY, float partialTick) {
         if (!this.isVisible()) return;
 
         // Draw background
         int backgroundColor = this.isFocused() ? -1 : -6250336;
-        fill(poseStack, this.x, this.y, this.x + this.width, this.y + this.height, backgroundColor);
+        guiGraphics.fill(this.getX(), this.getY(), this.getX() + this.getWidth(), this.getY() + this.getHeight(), backgroundColor);
 
         // Draw border
         int borderColor = this.isFocused() ? -1 : -6250336;
-        fill(poseStack, this.x - 1, this.y - 1, this.x + this.width + 1, this.y, borderColor);
-        fill(poseStack, this.x - 1, this.y + this.height, this.x + this.width + 1, this.y + this.height + 1, borderColor);
-        fill(poseStack, this.x - 1, this.y, this.x, this.y + this.height, borderColor);
-        fill(poseStack, this.x + this.width, this.y, this.x + this.width + 1, this.y + this.height, borderColor);
+        guiGraphics.fill(this.getX() - 1, this.getY() - 1, this.getX() + this.getWidth() + 1, this.getY(), borderColor);
+        guiGraphics.fill(this.getX() - 1, this.getY() + this.getHeight(), this.getX() + this.getWidth() + 1, this.getY() + this.getHeight() + 1, borderColor);
+        guiGraphics.fill(this.getX() - 1, this.getY(), this.getX(), this.getY() + this.getHeight(), borderColor);
+        guiGraphics.fill(this.getX() + this.getWidth(), this.getY(), this.getX() + this.getWidth() + 1, this.getY() + this.getHeight(), borderColor);
 
         // Draw multiline text
         String[] lines = getLines();
         Font font = Minecraft.getInstance().font;
         int textColor = 14737632;
-        int textX = this.x + 4;
-        int startY = this.y + 4;
-        int maxLineWidth = this.width - 8;
+        int textX = this.getX() + 4;
+        int startY = this.getY() + 4;
+        int maxLineWidth = this.getWidth() - 8;
 
         for (int i = 0; i < Math.min(lines.length, maxLines); i++) {
             String line = lines[i];
             int lineY = startY + (i * lineHeight);
             if (!line.isEmpty()) {
                 String displayText = font.plainSubstrByWidth(line, maxLineWidth);
-                font.draw(poseStack, displayText, textX, lineY, textColor);
+                guiGraphics.drawString(font, displayText, textX, lineY, textColor, false);
             }
         }
 
-        // Fixed cursor rendering that matches displayed text
         if (this.isFocused() && Minecraft.getInstance().gui.getGuiTicks() / 6 % 2 == 0) {
             int cursorPos = getCursorPosition();
             CursorInfo cursorInfo = getCursorLineAndPosition(cursorPos, lines);
 
             if (cursorInfo.lineIndex < maxLines && cursorInfo.lineIndex < lines.length) {
-                // Get the displayed portion of the line (truncated if too long)
                 String fullLine = lines[cursorInfo.lineIndex];
                 String displayedLine = font.plainSubstrByWidth(fullLine, maxLineWidth);
 
-                // Only show cursor if it's within the displayed portion
                 if (cursorInfo.positionInLine <= displayedLine.length()) {
                     String lineUpToCursor = displayedLine.substring(0, Math.min(cursorInfo.positionInLine, displayedLine.length()));
                     int cursorX = textX + font.width(lineUpToCursor);
                     int cursorY = startY + (cursorInfo.lineIndex * lineHeight);
 
-                    // Only draw cursor if it's within the widget bounds
-                    if (cursorX <= this.x + this.width - 4) {
-                        fill(poseStack, cursorX, cursorY - 1, cursorX + 1, cursorY + 9, -3092272);
+                    if (cursorX <= this.getX() + this.getWidth() - 4) {
+                        guiGraphics.fill(cursorX, cursorY - 1, cursorX + 1, cursorY + 9, -3092272);
                     }
                 }
             }
         }
     }
 
-    // Helper method to find which line the cursor is on and position within that line
     private CursorInfo getCursorLineAndPosition(int cursorPos, String[] lines) {
         int currentPos = 0;
 
@@ -246,10 +228,9 @@ public class SimpleMultilineEditBox extends EditBox {
                 return new CursorInfo(i, positionInLine, textBeforeCursor);
             }
 
-            currentPos = lineEndPos + 1; // +1 for the newline character
+            currentPos = lineEndPos + 1;
         }
 
-        // Cursor is at the very end
         int lastLineIndex = Math.max(0, lines.length - 1);
         return new CursorInfo(lastLineIndex, lines[lastLineIndex].length(), lines[lastLineIndex]);
     }
@@ -266,7 +247,6 @@ public class SimpleMultilineEditBox extends EditBox {
         return maxLines;
     }
 
-    // Helper class to store cursor information
     private static class CursorInfo {
         final int lineIndex;
         final int positionInLine;

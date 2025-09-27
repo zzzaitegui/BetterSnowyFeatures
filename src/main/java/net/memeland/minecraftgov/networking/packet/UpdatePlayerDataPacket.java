@@ -55,13 +55,12 @@ public class UpdatePlayerDataPacket {
                     return;
                 }
 
-                if (sender != null && sender.level instanceof ServerLevel serverLevel) {
+                if (sender != null && sender.level() instanceof ServerLevel serverLevel) {
 
                     LOGGER.info("Received player data update from {} for player UUID {}",
                             sender.getGameProfile().getName(), playerUuid);
 
                     // Security check: player can only update their own data
-                    // This handles both the old system (playerUuid = sender) and new system (ID card ownership)
                     if (!sender.getUUID().equals(playerUuid)) {
                         LOGGER.warn("Player {} tried to update data for different player {}",
                                 sender.getGameProfile().getName(), playerUuid);

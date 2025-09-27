@@ -6,14 +6,15 @@ import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.inventory.CraftingContainer;
 import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.crafting.CraftingBookCategory;
 import net.minecraft.world.item.crafting.CustomRecipe;
 import net.minecraft.world.item.crafting.RecipeSerializer;
 import net.minecraft.world.level.Level;
 
 public class PamphletCopyRecipe extends CustomRecipe {
 
-    public PamphletCopyRecipe(ResourceLocation location) {
-        super(location);
+    public PamphletCopyRecipe(ResourceLocation location, CraftingBookCategory category) {
+        super(location, category);
     }
 
     @Override
@@ -43,7 +44,7 @@ public class PamphletCopyRecipe extends CustomRecipe {
     }
 
     @Override
-    public ItemStack assemble(CraftingContainer container) {
+    public ItemStack assemble(CraftingContainer container, RegistryAccess registryAccess) {
         ItemStack signedPamphlet = ItemStack.EMPTY;
         int unsignedCount = 0;
 

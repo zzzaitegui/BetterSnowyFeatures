@@ -43,13 +43,11 @@ public class ResetElectionsCommand {
                 }
             });
 
-            // Log the action for server administration
             String adminName = source.getEntity() instanceof ServerPlayer player ?
                     player.getGameProfile().getName() : "Console";
             LOGGER.info("Elections reset by {}", adminName);
 
-            // Notify admins only (not broadcast to all players)
-            source.sendSuccess(Component.translatable("commands.modgov.resetelections.success"), true);
+            source.sendSuccess(() -> Component.translatable("commands.modgov.resetelections.success"), true);
             return 1;
         }
 

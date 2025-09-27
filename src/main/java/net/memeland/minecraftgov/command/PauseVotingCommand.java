@@ -28,20 +28,17 @@ public class PauseVotingCommand {
 
             VoteManager voteManager = VoteManager.get(serverLevel);
 
-            // Toggle the pause state
             boolean newPauseState = !voteManager.isVotingPaused();
             voteManager.setVotingPaused(newPauseState);
 
-            // Log the action for server administration
             String adminName = source.getEntity() instanceof ServerPlayer player ?
                     player.getGameProfile().getName() : "Console";
             LOGGER.info("Voting {} by {}", newPauseState ? "paused" : "unpaused", adminName);
 
-            // Send appropriate message
             if (newPauseState) {
-                source.sendSuccess(Component.translatable("commands.modgov.pausevoting.paused"), true);
+                source.sendSuccess(() -> Component.translatable("commands.modgov.pausevoting.paused"), true);
             } else {
-                source.sendSuccess(Component.translatable("commands.modgov.pausevoting.unpaused"), true);
+                source.sendSuccess(() -> Component.translatable("commands.modgov.pausevoting.unpaused"), true);
             }
 
             return 1;

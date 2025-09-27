@@ -2,6 +2,7 @@ package net.memeland.minecraftgov.block.custom;
 
 import net.memeland.minecraftgov.block.ModBlocks;
 import net.memeland.minecraftgov.block.entity.BulletinBoardBlockEntity;
+import net.memeland.minecraftgov.block.entity.ModBlockEntities;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
 import net.minecraft.server.level.ServerPlayer;
@@ -18,7 +19,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.StateDefinition;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DirectionProperty;
-import net.minecraft.world.level.storage.loot.LootContext;
+import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.phys.BlockHitResult;
 import net.minecraft.world.phys.shapes.CollisionContext;
 import net.minecraft.world.phys.shapes.VoxelShape;
@@ -86,7 +87,7 @@ public class BulletinBoardBlock extends BaseEntityBlock {
             BlockEntity entity = level.getBlockEntity(blockPos);
             if (entity instanceof BulletinBoardBlockEntity) {
                 NetworkHooks.openScreen(((ServerPlayer) player), ((BulletinBoardBlockEntity) entity), buf -> {
-                    buf.writeBlockPos(blockPos); // Send the actual block position to client
+                    buf.writeBlockPos(blockPos);
                 });
             } else {
                 throw new IllegalStateException("Our container provider for BulletinBoardBlockEntity is missing!");
@@ -97,13 +98,13 @@ public class BulletinBoardBlock extends BaseEntityBlock {
 
     @Override
     public @Nullable BlockEntity newBlockEntity(BlockPos blockPos, BlockState blockState) {
-        return new BulletinBoardBlockEntity(blockPos, blockState);
+        return ModBlockEntities.BULLETIN_BOARD.get().create(blockPos, blockState);
     }
 
     @Override
-    public List<ItemStack> getDrops(BlockState state, LootContext.Builder builder) {
+    public List<ItemStack> getDrops(BlockState state, LootParams.Builder builder) {
         List<ItemStack> drops = new ArrayList<>();
-        drops.add(new ItemStack(ModBlocks.BULLETIN_BOARD_BLOCK.get())); // Drop the block itself
+        drops.add(new ItemStack(ModBlocks.BULLETIN_BOARD_BLOCK.get()));
         return drops;
     }
 }

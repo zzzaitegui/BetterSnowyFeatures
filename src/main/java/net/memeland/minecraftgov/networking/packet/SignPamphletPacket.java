@@ -50,7 +50,6 @@ public class SignPamphletPacket {
                 return;
             }
 
-            // Check if there's content to sign
             String title = PamphletItem.getTitle(pamphletStack);
             String content = PamphletItem.getContent(pamphletStack);
             if (title.trim().isEmpty() && content.trim().isEmpty()) {
@@ -58,7 +57,6 @@ public class SignPamphletPacket {
                 return;
             }
 
-            // Sign the pamphlet
             PamphletItem.sign(pamphletStack, player);
             player.sendSystemMessage(Component.translatable("pamphlet.modgov.signed_success").withStyle(ChatFormatting.GREEN));
         });

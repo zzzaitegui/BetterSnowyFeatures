@@ -2,7 +2,7 @@ package net.memeland.minecraftgov.recipe;
 
 import net.memeland.minecraftgov.ModgovMod;
 import net.minecraft.world.item.crafting.RecipeSerializer;
-import net.minecraft.world.item.crafting.SimpleRecipeSerializer;
+import net.minecraft.world.item.crafting.SimpleCraftingRecipeSerializer;
 import net.minecraftforge.eventbus.api.IEventBus;
 import net.minecraftforge.registries.DeferredRegister;
 import net.minecraftforge.registries.ForgeRegistries;
@@ -14,11 +14,11 @@ public class ModRecipeSerializers {
 
     public static final RegistryObject<RecipeSerializer<PamphletCopyRecipe>> PAMPHLET_COPY =
             SERIALIZERS.register("pamphlet_copy",
-                    () -> new SimpleRecipeSerializer<>(PamphletCopyRecipe::new));
+                    () -> new SimpleCraftingRecipeSerializer<>(PamphletCopyRecipe::new));
 
     public static final RegistryObject<RecipeSerializer<PamphletDyeRecipe>> PAMPHLET_DYE =
             SERIALIZERS.register("pamphlet_dye",
-                    () -> new SimpleRecipeSerializer<>(PamphletDyeRecipe::new));
+                    () -> new SimpleCraftingRecipeSerializer<>(PamphletDyeRecipe::new));
 
     public static void register(IEventBus eventBus) {
         SERIALIZERS.register(eventBus);

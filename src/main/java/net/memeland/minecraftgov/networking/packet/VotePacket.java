@@ -49,7 +49,7 @@ public class VotePacket {
                 return;
             }
 
-            if (player != null && player.level instanceof ServerLevel serverLevel) {
+            if (player != null && player.level() instanceof ServerLevel serverLevel) {
 
                 LOGGER.info("Received vote request from {} for party '{}' at position {}",
                         player.getGameProfile().getName(), partyName, pos);
@@ -134,13 +134,13 @@ public class VotePacket {
             LOGGER.info("ID card ejected to {}'s inventory", player.getGameProfile().getName());
         } else {
             ItemEntity droppedItem = new ItemEntity(
-                    player.level,
+                    player.level(),
                     player.getX(),
                     player.getY(),
                     player.getZ(),
                     idCardStack.copy()
             );
-            player.level.addFreshEntity(droppedItem);
+            player.level().addFreshEntity(droppedItem);
 
             inventory.setStackInSlot(1, ItemStack.EMPTY);
 

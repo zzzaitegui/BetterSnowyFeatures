@@ -3,10 +3,8 @@ package net.memeland.minecraftgov.block;
 import net.memeland.minecraftgov.ModgovMod;
 import net.memeland.minecraftgov.block.custom.BallotBoxBlock;
 import net.memeland.minecraftgov.block.custom.BulletinBoardBlock;
-import net.memeland.minecraftgov.item.ModCreativeModeTab;
 import net.memeland.minecraftgov.item.ModItems;
 import net.minecraft.world.item.BlockItem;
-import net.minecraft.world.item.CreativeModeTab;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.level.block.*;
 import net.minecraft.world.level.block.state.BlockBehaviour;
@@ -30,25 +28,22 @@ public class ModBlocks {
                     .isValidSpawn((state, reader, pos, type) -> false)
                     .isRedstoneConductor((state, reader, pos) -> false)
                     .isSuffocating((state, reader, pos) -> false)
-                    .isViewBlocking((state, reader, pos) -> false)),
-            ModCreativeModeTab.MINECRAFTGOV_TAB);
-
+                    .isViewBlocking((state, reader, pos) -> false)));
 
     public static final RegistryObject<BulletinBoardBlock> BULLETIN_BOARD_BLOCK = registerBlock("bulletin_board",
             () -> new BulletinBoardBlock(BlockBehaviour.Properties.copy(Blocks.LOOM)
                     .randomTicks()
                     .noOcclusion()
-                    .dynamicShape()),
-            ModCreativeModeTab.MINECRAFTGOV_TAB);
+                    .dynamicShape()));
 
-    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block, CreativeModeTab tab) {
+    private static <T extends Block> RegistryObject<T> registerBlock(String name, Supplier<T> block) {
         RegistryObject<T> toReturn = BLOCKS.register(name, block);
-        registerBlockItem(name, toReturn, tab);
+        registerBlockItem(name, toReturn);
         return toReturn;
     }
 
-    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, Supplier<T> block, CreativeModeTab tab) {
-        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties().tab(tab)));
+    private static <T extends Block> RegistryObject<Item> registerBlockItem(String name, Supplier<T> block) {
+        return ModItems.ITEMS.register(name, () -> new BlockItem(block.get(), new Item.Properties()));
     }
 
     public static void register(IEventBus eventBus) {

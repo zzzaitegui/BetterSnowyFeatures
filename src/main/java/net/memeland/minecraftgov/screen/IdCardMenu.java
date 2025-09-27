@@ -28,9 +28,9 @@ public class IdCardMenu extends AbstractContainerMenu {
 
     public IdCardMenu(int id, Inventory inventory, FriendlyByteBuf extraData) {
         this(id, inventory,
-                extraData.readUUID(),    // Card owner UUID
-                extraData.readUUID(),    // Opener UUID
-                extraData.readUtf());    // Owner name
+                extraData.readUUID(),
+                extraData.readUUID(),
+                extraData.readUtf());
     }
 
     @Override
@@ -40,7 +40,6 @@ public class IdCardMenu extends AbstractContainerMenu {
 
     @Override
     public boolean stillValid(Player player) {
-        // Player must have an ID card in their inventory to keep the menu open
         for (int i = 0; i < player.getInventory().getContainerSize(); i++) {
             ItemStack stack = player.getInventory().getItem(i);
             if (stack.is(ModItems.ID_CARD.get())) {
@@ -66,16 +65,15 @@ public class IdCardMenu extends AbstractContainerMenu {
         return canEdit;
     }
 
-    // Get the card owner's data (not the opener's data)
     public PlayerData getPlayerData(Player player) {
-        if (player.level instanceof ServerLevel serverLevel) {
+        if (player.level() instanceof ServerLevel serverLevel) {
             PlayerDataManager manager = PlayerDataManager.get(serverLevel);
-            return manager.getPlayerData(cardOwnerUuid); // Always get owner's data
+            return manager.getPlayerData(cardOwnerUuid);
         }
         return new PlayerData();
     }
 
-    // Legacy method for compatibility - now returns card owner UUID
+    // Legacy method for compat with the old system
     @Deprecated
     public UUID getPlayerUuid() {
         return cardOwnerUuid;

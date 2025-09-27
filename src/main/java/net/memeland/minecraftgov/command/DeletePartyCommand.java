@@ -40,32 +40,26 @@ public class DeletePartyCommand {
                 return 0;
             }
 
-            // Get vote count before deletion for logging
             int voteCount = voteManager.getVoteCount(partyName);
 
-            // Remove party from PartyManager
             boolean partyRemoved = partyManager.removeParty(partyName);
 
-            // Remove party votes from VoteManager
             boolean votesRemoved = voteManager.removePartyVotes(partyName);
 
             if (partyRemoved) {
-                // Close any open ballot box GUIs to prevent stale data
                 serverLevel.getServer().getPlayerList().getPlayers().forEach(player -> {
                     if (player.containerMenu instanceof BallotBoxMenu) {
                         player.closeContainer();
                     }
                 });
 
-                // Log the action for server administration
                 String adminName = source.getEntity() instanceof ServerPlayer player ?
                         player.getGameProfile().getName() : "Console";
                 LOGGER.info("Party '{}' deleted by {} (had {} votes)", partyName, adminName, voteCount);
 
-                // Send success message
-                source.sendSuccess(Component.translatable("commands.modgov.deleteparty.success", partyName), true);
+                source.sendSuccess(() -> Component.translatable("commands.modgov.deleteparty.success", partyName), true);
                 if (voteCount > 0) {
-                    source.sendSuccess(Component.translatable("commands.modgov.deleteparty.votes_removed", voteCount), true);
+                    source.sendSuccess(() -> Component.translatable("commands.modgov.deleteparty.votes_removed", voteCount), true);
                 }
                 return 1;
             }

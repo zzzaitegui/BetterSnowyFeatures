@@ -33,7 +33,6 @@ public class ModMessages {
 
         INSTANCE = net;
 
-        // Keep existing packets for other features
         net.messageBuilder(RegisterPartyPacket.class, id(), NetworkDirection.PLAY_TO_SERVER)
                 .decoder(RegisterPartyPacket::new)
                 .encoder(RegisterPartyPacket::toBytes)

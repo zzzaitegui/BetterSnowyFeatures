@@ -25,7 +25,7 @@ public class PlayerEvents {
     @SubscribeEvent
     public static void onPlayerJoin(PlayerEvent.PlayerLoggedInEvent event) {
         if (event.getEntity() instanceof ServerPlayer player) {
-            if (player.level instanceof ServerLevel serverLevel) {
+            if (player.level() instanceof ServerLevel serverLevel) {
                 PlayerDataManager manager = PlayerDataManager.get(serverLevel);
 
                 // Only give ID card on first-ever join
@@ -46,10 +46,11 @@ public class PlayerEvents {
             }
         }
     }
+
     private static void giveIdCard(ServerPlayer player) {
         ItemStack idCard = new ItemStack(ModItems.ID_CARD.get());
 
-        // Store ownership data in the item's NBT
+        // Store ownership data in the item NBT
         CompoundTag nbt = idCard.getOrCreateTag();
         nbt.putUUID("owner", player.getUUID());
         nbt.putString("ownerName", player.getGameProfile().getName());
@@ -57,7 +58,7 @@ public class PlayerEvents {
         boolean added = player.getInventory().add(idCard);
 
         if (!added) {
-            // If inventory is full, drop it
+            // If inventory full drop it
             player.drop(idCard, false);
         }
     }

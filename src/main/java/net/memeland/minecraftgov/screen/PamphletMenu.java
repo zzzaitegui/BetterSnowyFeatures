@@ -64,7 +64,7 @@ public class PamphletMenu extends AbstractContainerMenu {
         return PamphletItem.getAuthor(pamphletStack);
     }
 
-    // NEW: Color methods for GUI tinting
+    // Color methods for GUI tinting
     public boolean hasColor() {
         return PamphletItem.hasColor(pamphletStack);
     }

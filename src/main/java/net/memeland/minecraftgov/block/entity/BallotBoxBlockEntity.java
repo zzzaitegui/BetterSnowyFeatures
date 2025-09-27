@@ -83,6 +83,7 @@ public class BallotBoxBlockEntity extends BlockEntity implements MenuProvider {
 
     @Override
     public void invalidateCaps() {
+        super.invalidateCaps();
         this.optional.invalidate();
     }
 

@@ -34,8 +34,6 @@ public class PlayerDataHolder {
     private static void cleanupOldDataIfNeeded() {
         long now = System.currentTimeMillis();
         if (now - lastCleanup > CLEANUP_INTERVAL) {
-            // Clear all stored data older than the cleanup interval
-            // Since this is temporary data for UI sync, clearing it periodically is safe
             storedData.clear();
             lastCleanup = now;
         }

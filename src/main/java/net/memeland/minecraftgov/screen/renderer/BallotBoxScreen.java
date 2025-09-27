@@ -1,16 +1,14 @@
 package net.memeland.minecraftgov.screen.renderer;
 
-import com.mojang.blaze3d.systems.RenderSystem;
-import com.mojang.blaze3d.vertex.PoseStack;
 import net.memeland.minecraftgov.ModgovMod;
 import net.memeland.minecraftgov.data.PartyData;
 import net.memeland.minecraftgov.networking.ModMessages;
 import net.memeland.minecraftgov.networking.packet.VotePacket;
 import net.memeland.minecraftgov.networking.packet.VoteDataHolder;
 import net.memeland.minecraftgov.screen.BallotBoxMenu;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
-import net.minecraft.client.renderer.GameRenderer;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.entity.player.Inventory;
@@ -100,7 +98,6 @@ public class BallotBoxScreen extends AbstractContainerScreen<BallotBoxMenu> {
     private void createVoteButtons() {
         voteButtons.clear();
 
-
         if (availableParties.isEmpty()) {
             return;
         }
@@ -119,14 +116,13 @@ public class BallotBoxScreen extends AbstractContainerScreen<BallotBoxMenu> {
             int buttonY = startY + (i * spacing);
 
             // Vote button for this party
-            Button voteButton = new Button(
-                    x + 13, buttonY, buttonWidth, buttonHeight,
-                    Component.translatable("gui.modgov.vote"),
-                    button -> castVote(party.getName()),
-                    (button, poseStack, mouseX, mouseY) -> {
-                        this.renderTooltip(poseStack, Component.literal(party.getName()), mouseX, mouseY);
-                    }
-            );
+            Button voteButton = Button.builder(
+                            Component.translatable("gui.modgov.vote"),
+                            button -> castVote(party.getName())
+                    )
+                    .bounds(x + 13, buttonY, buttonWidth, buttonHeight)
+                    .tooltip(net.minecraft.client.gui.components.Tooltip.create(Component.literal(party.getName())))
+                    .build();
 
             // Disable button if player already voted
             voteButton.active = !hasPlayerVoted;
@@ -134,39 +130,35 @@ public class BallotBoxScreen extends AbstractContainerScreen<BallotBoxMenu> {
             this.addRenderableWidget(voteButton);
             voteButtons.add(voteButton);
         }
-
     }
 
     @Override
-    protected void renderBg(PoseStack poseStack, float partialTick, int mouseX, int mouseY) {
-        RenderSystem.setShader(GameRenderer::getPositionTexShader);
-        RenderSystem.setShaderColor(1.0F, 1.0F, 1.0F, 1.0F);
-        RenderSystem.setShaderTexture(0, TEXTURE);
+    protected void renderBg(GuiGraphics guiGraphics, float partialTick, int mouseX, int mouseY) {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
 
-        this.blit(poseStack, x, y, 0, 0, imageWidth, imageHeight);
+        guiGraphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight);
     }
 
     @Override
-    protected void renderLabels(PoseStack poseStack, int mouseX, int mouseY) {
-        this.font.draw(poseStack, this.title, this.titleLabelX, this.titleLabelY, 4210752);
+    protected void renderLabels(GuiGraphics guiGraphics, int mouseX, int mouseY) {
+        guiGraphics.drawString(this.font, this.title, this.titleLabelX, this.titleLabelY, 4210752, false);
 
-        this.font.draw(poseStack, Component.translatable("gui.modgov.ballot_slot"), 85, 6, 0x404040);
-        this.font.draw(poseStack, Component.translatable("gui.modgov.id_card_slot"), 128, 6, 0x404040);
+        guiGraphics.drawString(this.font, Component.translatable("gui.modgov.ballot_slot"), 85, 6, 0x404040, false);
+        guiGraphics.drawString(this.font, Component.translatable("gui.modgov.id_card_slot"), 128, 6, 0x404040, false);
 
         // Draw instruction text if not voted
         if (!hasPlayerVoted) {
             Component instructionText = Component.translatable("gui.modgov.vote_instruction");
             int instructionWidth = this.font.width(instructionText);
-            this.font.draw(poseStack, instructionText, (imageWidth - instructionWidth) / 2, 40, 0x666666);
+            guiGraphics.drawString(this.font, instructionText, (imageWidth - instructionWidth) / 2, 40, 0x666666, false);
         }
 
         if (availableParties.isEmpty()) {
             // Show "No parties registered" message
             Component noPartiesMsg = Component.translatable("gui.modgov.no_parties");
             int msgWidth = this.font.width(noPartiesMsg);
-            this.font.draw(poseStack, noPartiesMsg, (imageWidth - msgWidth) / 2, 85, 0x666666);
+            guiGraphics.drawString(this.font, noPartiesMsg, (imageWidth - msgWidth) / 2, 85, 0x666666, false);
             return;
         }
 
@@ -174,7 +166,7 @@ public class BallotBoxScreen extends AbstractContainerScreen<BallotBoxMenu> {
         if (hasPlayerVoted) {
             Component votedMsg = Component.translatable("gui.modgov.already_voted");
             int msgWidth = this.font.width(votedMsg);
-            this.font.draw(poseStack, votedMsg, (imageWidth - msgWidth) / 2, 40, 0x999999);
+            guiGraphics.drawString(this.font, votedMsg, (imageWidth - msgWidth) / 2, 40, 0x999999, false);
         }
 
         // Draw party list with percentages
@@ -190,9 +182,7 @@ public class BallotBoxScreen extends AbstractContainerScreen<BallotBoxMenu> {
             int symbolY = labelY + 1;
 
             if (party.getSymbolId() >= 1 && party.getSymbolId() <= 25) {
-                RenderSystem.setShaderTexture(0, SYMBOL_TEXTURES[party.getSymbolId() - 1]);
-                blit(poseStack, symbolX, symbolY, 16, 16, 0, 0, 16, 16, 16, 16);
-                RenderSystem.setShaderTexture(0, TEXTURE); // Reset texture
+                guiGraphics.blit(SYMBOL_TEXTURES[party.getSymbolId() - 1], symbolX, symbolY, 0, 0, 16, 16, 16, 16);
             }
 
             // Calculate percentage
@@ -209,27 +199,27 @@ public class BallotBoxScreen extends AbstractContainerScreen<BallotBoxMenu> {
 
             // Get party color
             int textColor = party.getColor().getTextColor();
-            if (textColor == 0xF9FFFE) { // White is hard to read
+            if (textColor == 0xF9FFFE) {
                 textColor = 0x404040;
             }
 
             // Draw the text next to symbol
-            this.font.draw(poseStack, displayText, 87, labelY + 5, textColor);
+            guiGraphics.drawString(this.font, displayText, 87, labelY + 5, textColor, false);
         }
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float delta) {
-        renderBackground(poseStack);
-        super.render(poseStack, mouseX, mouseY, delta);
-        renderTooltip(poseStack, mouseX, mouseY);
+    public void render(GuiGraphics guiGraphics, int mouseX, int mouseY, float delta) {
+        renderBackground(guiGraphics);
+        super.render(guiGraphics, mouseX, mouseY, delta);
+        renderTooltip(guiGraphics, mouseX, mouseY);
 
         if (hasShiftDown() && totalVotes > 0) {
-            renderVoteCountTooltips(poseStack, mouseX, mouseY);
+            renderVoteCountTooltips(guiGraphics, mouseX, mouseY);
         }
     }
 
-    private void renderVoteCountTooltips(PoseStack poseStack, int mouseX, int mouseY) {
+    private void renderVoteCountTooltips(GuiGraphics guiGraphics, int mouseX, int mouseY) {
         int x = (width - imageWidth) / 2;
         int y = (height - imageHeight) / 2;
         int startY = y + 52;
@@ -245,7 +235,7 @@ public class BallotBoxScreen extends AbstractContainerScreen<BallotBoxMenu> {
 
                 int voteCount = voteData.getOrDefault(party.getName(), 0);
                 Component tooltip = Component.literal(String.format("%d votes", voteCount));
-                this.renderTooltip(poseStack, tooltip, mouseX, mouseY);
+                guiGraphics.renderTooltip(this.font, tooltip, mouseX, mouseY);
                 break;
             }
         }

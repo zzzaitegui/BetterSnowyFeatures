@@ -25,7 +25,7 @@ public class ModItems {
 
     // Helper method to create the creative mode tab properties and reuse it on all items
     private static Item.Properties props() {
-        return new Item.Properties().tab(ModCreativeModeTab.MINECRAFTGOV_TAB);
+        return new Item.Properties();
     }
 
     public static void register(IEventBus eventBus) {

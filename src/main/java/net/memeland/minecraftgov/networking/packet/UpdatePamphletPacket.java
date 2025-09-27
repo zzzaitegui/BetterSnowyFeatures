@@ -87,7 +87,7 @@ public class UpdatePamphletPacket {
                 return;
             }
 
-            // Validate symbols (max 4, valid range 1-25)
+            // Validate symbols
             if (symbols.size() > 4) {
                 player.sendSystemMessage(Component.translatable("pamphlet.modgov.too_many_symbols").withStyle(ChatFormatting.RED));
                 return;

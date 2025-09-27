@@ -18,17 +18,17 @@ public class BulletinBoardMenu extends AbstractContainerMenu {
     // Server-side constructor
     public BulletinBoardMenu(int pContainerId, Inventory playerInv, BulletinBoardBlockEntity blockEntity, BlockPos pos) {
         super(ModMenuTypes.BULLETIN_BOARD_MENU.get(), pContainerId);
-        this.levelAccess = ContainerLevelAccess.create(playerInv.player.getLevel(), pos);
+        this.levelAccess = ContainerLevelAccess.create(playerInv.player.level(), pos);
         this.blockEntity = blockEntity;
         this.blockPos = pos;
     }
 
-    // Client-side constructor (receives BlockPos from server via FriendlyByteBuf)
+    // Client-side constructor
     public BulletinBoardMenu(int id, Inventory inv, FriendlyByteBuf extraData) {
         super(ModMenuTypes.BULLETIN_BOARD_MENU.get(), id);
         this.blockEntity = null;
         this.blockPos = extraData.readBlockPos();
-        this.levelAccess = ContainerLevelAccess.create(inv.player.getLevel(), this.blockPos);
+        this.levelAccess = ContainerLevelAccess.create(inv.player.level(), this.blockPos);
     }
 
     @Override

@@ -56,7 +56,7 @@ public class RegisterPartyPacket {
                 return;
             }
 
-            if (player != null && player.level instanceof ServerLevel serverLevel) {
+            if (player != null && player.level() instanceof ServerLevel serverLevel) {
 
                 LOGGER.info("Received party registration request from {} at position {}",
                         player.getGameProfile().getName(), pos);
@@ -116,19 +116,16 @@ public class RegisterPartyPacket {
     }
 
     private String validateRegistration(PartyManager manager, String name) {
-        // Check name validity
         if (name.isEmpty() || name.length() > 25) {
             return "party.modgov.registration.invalid_name";
         }
 
-        // Check if party already exists
         if (manager.hasParty(name)) {
             LOGGER.info("Duplicate party check: '{}' already exists. Current parties: {}",
                     name, manager.getAllParties().stream().map(p -> p.getName()).toList());
             return "party.modgov.registration.duplicate";
         }
 
-        // Check party limit
         if (!manager.canRegisterMoreParties()) {
             return "party.modgov.registration.too_many";
         }

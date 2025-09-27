@@ -78,7 +78,6 @@ public class PlayerDataManager extends SavedData {
         setDirty();
     }
 
-    // New methods for ID card tracking
     public boolean hasPlayerReceivedIdCard(UUID playerUuid) {
         return getPlayerData(playerUuid).hasReceivedIdCard();
     }
