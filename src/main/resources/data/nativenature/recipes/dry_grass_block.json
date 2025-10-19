@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:grass_block"
+  },
+  "essence": {
+    "item": "nativenature:dry_essence"
+  },
+  "result": {
+    "item": "nativenature:dry_grass_block",
+    "count": 8
+  }
+}

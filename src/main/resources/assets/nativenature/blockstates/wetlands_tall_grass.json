@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "nativenature:block/wetlands_tall_grass_bottom"
+    },
+    "half=upper": {
+      "model": "nativenature:block/wetlands_tall_grass_top"
+    }
+  }
+}

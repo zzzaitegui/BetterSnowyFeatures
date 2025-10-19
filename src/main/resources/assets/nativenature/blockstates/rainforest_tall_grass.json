@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "nativenature:block/rainforest_tall_grass_bottom"
+    },
+    "half=upper": {
+      "model": "nativenature:block/rainforest_tall_grass_top"
+    }
+  }
+}

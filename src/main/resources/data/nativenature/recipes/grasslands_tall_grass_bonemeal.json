@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "nativenature:grasslands_grass"
+    },
+    {
+      "item": "nativenature:grasslands_grass"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "result": {
+    "item": "nativenature:grasslands_tall_grass"
+  }
+}

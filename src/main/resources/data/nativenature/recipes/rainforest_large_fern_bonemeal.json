@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "nativenature:rainforest_fern"
+    },
+    {
+      "item": "nativenature:rainforest_fern"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "result": {
+    "item": "nativenature:rainforest_large_fern"
+  }
+}

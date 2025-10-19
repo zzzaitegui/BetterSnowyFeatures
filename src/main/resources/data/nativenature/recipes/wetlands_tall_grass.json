@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:tall_grass"
+  },
+  "essence": {
+    "item": "nativenature:wetlands_essence"
+  },
+  "result": {
+    "item": "nativenature:wetlands_tall_grass",
+    "count": 8
+  }
+}

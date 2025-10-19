@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "nativenature:arctic_grass"
+    },
+    {
+      "item": "nativenature:arctic_grass"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "result": {
+    "item": "nativenature:arctic_tall_grass"
+  }
+}

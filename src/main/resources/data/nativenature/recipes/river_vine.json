@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:vine"
+  },
+  "essence": {
+    "item": "nativenature:river_essence"
+  },
+  "result": {
+    "item": "nativenature:river_vine",
+    "count": 8
+  }
+}

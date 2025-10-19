@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:jungle_leaves"
+  },
+  "essence": {
+    "item": "nativenature:glacial_essence"
+  },
+  "result": {
+    "item": "nativenature:glacial_jungle_leaves",
+    "count": 8
+  }
+}

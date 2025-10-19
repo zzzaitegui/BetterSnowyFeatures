@@ -1,0 +1,12 @@
+{
+  "parent": "block/cube",
+  "textures": {
+    "particle": "nativenature:block/arctic_acacia_leaves_side",
+    "down": "nativenature:block/arctic_acacia_leaves_bottom",
+    "up": "nativenature:block/arctic_acacia_leaves_top",
+    "north": "nativenature:block/arctic_acacia_leaves_side",
+    "east": "nativenature:block/arctic_acacia_leaves_side",
+    "south": "nativenature:block/arctic_acacia_leaves_side",
+    "west": "nativenature:block/arctic_acacia_leaves_side"
+  }
+}

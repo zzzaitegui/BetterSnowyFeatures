@@ -1,0 +1,6 @@
+{
+  "parent": "block/cross",
+  "textures": {
+    "cross": "nativenature:block/arctic_fern"
+  }
+}

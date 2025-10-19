@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:fern"
+  },
+  "essence": {
+    "item": "nativenature:arid_essence"
+  },
+  "result": {
+    "item": "nativenature:arid_fern",
+    "count": 8
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:jungle_leaves"
+  },
+  "essence": {
+    "item": "nativenature:dry_essence"
+  },
+  "result": {
+    "item": "nativenature:dry_jungle_leaves",
+    "count": 8
+  }
+}

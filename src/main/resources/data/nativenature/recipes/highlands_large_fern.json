@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:large_fern"
+  },
+  "essence": {
+    "item": "nativenature:highlands_essence"
+  },
+  "result": {
+    "item": "nativenature:highlands_large_fern",
+    "count": 8
+  }
+}

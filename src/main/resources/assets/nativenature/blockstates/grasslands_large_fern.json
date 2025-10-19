@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "nativenature:block/grasslands_large_fern_bottom"
+    },
+    "half=upper": {
+      "model": "nativenature:block/grasslands_large_fern_top"
+    }
+  }
+}

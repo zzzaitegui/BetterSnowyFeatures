@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "nativenature:wetlands_fern"
+    },
+    {
+      "item": "nativenature:wetlands_fern"
+    },
+    {
+      "item": "minecraft:bone_meal"
+    }
+  ],
+  "result": {
+    "item": "nativenature:wetlands_large_fern"
+  }
+}

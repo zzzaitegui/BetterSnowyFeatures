@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:dark_oak_leaves"
+  },
+  "essence": {
+    "item": "nativenature:tropical_essence"
+  },
+  "result": {
+    "item": "nativenature:tropical_dark_oak_leaves",
+    "count": 8
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "minecraft:glass_bottle"
+    },
+    {
+      "item": "minecraft:grass"
+    },
+    {
+      "item": "minecraft:azure_bluet"
+    }
+  ],
+  "result": {
+    "item": "nativenature:grasslands_essence"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:fern"
+  },
+  "essence": {
+    "item": "nativenature:wasteland_essence"
+  },
+  "result": {
+    "item": "nativenature:wasteland_fern",
+    "count": 8
+  }
+}
