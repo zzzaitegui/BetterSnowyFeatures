@@ -1,0 +1,22 @@
+{
+  "replace": false,
+  "values": [
+    "nativenature:cold_grass_block",
+    "nativenature:glacial_grass_block",
+    "nativenature:highlands_grass_block",
+    "nativenature:temperate_grass_block",
+    "nativenature:river_grass_block",
+    "nativenature:arid_grass_block",
+    "nativenature:dry_grass_block",
+    "nativenature:hot_grass_block",
+    "nativenature:wetlands_grass_block",
+    "nativenature:continental_grass_block",
+    "nativenature:stygian_grass_block",
+    "nativenature:tropical_grass_block",
+    "nativenature:grasslands_grass_block",
+    "nativenature:forest_grass_block",
+    "nativenature:rainforest_grass_block",
+    "nativenature:wasteland_grass_block",
+    "nativenature:arctic_grass_block"
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "item/generated",
+  "textures": {
+    "layer0": "nativenature:item/rainforest_water_bucket"
+  }
+}

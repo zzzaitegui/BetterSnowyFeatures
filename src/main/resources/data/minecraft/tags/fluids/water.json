@@ -1,0 +1,15 @@
+{
+  "replace": false,
+  "values": [
+    "nativenature:glacial_water_still",
+    "nativenature:glacial_water_flowing",
+    "nativenature:river_water_still",
+    "nativenature:river_water_flowing",
+    "nativenature:wetlands_water_still",
+    "nativenature:wetlands_water_flowing",
+    "nativenature:rainforest_water_still",
+    "nativenature:rainforest_water_flowing",
+    "nativenature:tropical_water_still",
+    "nativenature:tropical_water_flowing"
+  ]
+}

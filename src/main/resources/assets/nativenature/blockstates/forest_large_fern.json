@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "half=lower": {
+      "model": "nativenature:block/forest_large_fern_bottom"
+    },
+    "half=upper": {
+      "model": "nativenature:block/forest_large_fern_top"
+    }
+  }
+}

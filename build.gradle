@@ -6,11 +6,11 @@ plugins {
     id 'org.parchmentmc.librarian.forgegradle' version '1.+'
 }
 
-version = '1.0.2-1.20.1'
-group = 'net.memeland.modgov'
+version = '1.1.0-1.20.1'
+group = 'net.memeland.nativenature'
 
 base {
-    archivesName = 'modgov'
+    archivesName = 'nativenature'
 }
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.
@@ -76,10 +76,10 @@ minecraft {
             property 'forge.logging.console.level', 'debug'
 
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'modgov'
+            property 'forge.enabledGameTestNamespaces', 'nativenature'
 
             mods {
-                "modgov" {
+                "nativenature" {
                     source sourceSets.main
                 }
             }
@@ -87,11 +87,11 @@ minecraft {
 
         client {
             // Comma-separated list of namespaces to load gametests from. Empty = all namespaces.
-            property 'forge.enabledGameTestNamespaces', 'modgov'
+            property 'forge.enabledGameTestNamespaces', 'nativenature'
         }
 
         server {
-            property 'forge.enabledGameTestNamespaces', 'modgov'
+            property 'forge.enabledGameTestNamespaces', 'nativenature'
             args '--nogui'
         }
 
@@ -99,7 +99,7 @@ minecraft {
         // By default, the server will crash when no gametests are provided.
         // The gametest system is also enabled by default for other run configs under the /test command.
         gameTestServer {
-            property 'forge.enabledGameTestNamespaces', 'modgov'
+            property 'forge.enabledGameTestNamespaces', 'nativenature'
         }
 
         data {
@@ -107,7 +107,7 @@ minecraft {
             workingDirectory project.file('run-data')
 
             // Specify the modid for data generation, where to output the resulting resource, and where to look for existing resources.
-            args '--mod', 'modgov', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
+            args '--mod', 'nativenature', '--all', '--output', file('src/generated/resources/'), '--existing', file('src/main/resources/')
         }
     }
 }
@@ -116,27 +116,20 @@ minecraft {
 sourceSets.main.resources { srcDir 'src/generated/resources' }
 
 repositories {
-    maven { url = 'https://maven.minecraftforge.net' }
     maven {
-        // location of the maven that hosts JEI files before January 2023
+        url = 'https://maven.minecraftforge.net'
+    }
+    maven {
         name = "Progwml6's maven"
         url = "https://dvs1.progwml6.com/files/maven/"
     }
     maven {
-        // location of the maven that hosts JEI files since January 2023
         name = "Jared's maven"
         url = "https://maven.blamejared.com/"
     }
     maven {
-        // location of a maven mirror for JEI files, as a fallback
         name = "ModMaven"
         url = "https://modmaven.dev"
-    }
-    maven {
-        url "https://cursemaven.com"
-        content {
-            includeGroup "curse.maven"
-        }
     }
 }
 
@@ -147,6 +140,9 @@ dependencies {
     // If the group id is "net.minecraft" and the artifact id is one of ["client", "server", "joined"],
     // then special handling is done to allow a setup of a vanilla dependency without the use of an external repository.
     minecraft "net.minecraftforge:forge:1.20.1-47.4.9"
+    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-common-api:${jei_version}"))
+    compileOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge-api:${jei_version}"))
+    runtimeOnly(fg.deobf("mezz.jei:jei-${minecraft_version}-forge:${jei_version}"))
 
     // Real mod deobf dependency examples - these get remapped to your current mappings
     // compileOnly fg.deobf("mezz.jei:jei-${mc_version}:${jei_version}:api") // Adds JEI API as a compile dependency
@@ -172,7 +168,7 @@ tasks.named('processResources', ProcessResources).configure {
             minecraft_version: '1.20.1', minecraft_version_range: '[1.20.1,1.21)',
             forge_version: '47.4.9', forge_version_range: '[47,)',
             loader_version_range: '[47,)',
-            mod_id: 'modgov', mod_name: 'Mod.gov', mod_license: 'MIT License', mod_version: '1.0.2-1.20.1',
+            mod_id: 'nativenature', mod_name: 'Native Nature', mod_license: 'MIT License', mod_version: '1.1.0-1.20.1',
             mod_authors: 'zzaitegui', mod_description: mod_description,
     ]
     inputs.properties replaceProperties
@@ -186,7 +182,7 @@ tasks.named('processResources', ProcessResources).configure {
 tasks.named('jar', Jar).configure {
     manifest {
         attributes([
-                'Specification-Title'     : 'modgov',
+                'Specification-Title'     : 'nativenature',
                 'Specification-Vendor'    : 'zzaitegui',
                 'Specification-Version'   : '1', // We are version 1 of ourselves
                 'Implementation-Title'    : project.name,

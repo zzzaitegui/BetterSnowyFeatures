@@ -1,0 +1,13 @@
+{
+  "type": "nativenature:tinted_block_crafting",
+  "input": {
+    "item": "minecraft:cherry_leaves"
+  },
+  "essence": {
+    "item": "nativenature:arctic_essence"
+  },
+  "result": {
+    "item": "nativenature:arctic_cherry_leaves",
+    "count": 8
+  }
+}

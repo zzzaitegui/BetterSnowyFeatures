@@ -1,0 +1,25 @@
+{
+  "type": "minecraft:block",
+  "pools": [
+    {
+      "bonus_rolls": 0.0,
+      "entries": [
+        {
+          "type": "minecraft:item",
+          "conditions": [
+            {
+              "block": "nativenature:wetlands_large_fern",
+              "condition": "minecraft:block_state_property",
+              "properties": {
+                "half": "lower"
+              }
+            }
+          ],
+          "name": "nativenature:wetlands_large_fern"
+        }
+      ],
+      "rolls": 1.0
+    }
+  ],
+  "random_sequence": "nativenature:blocks/wetlands_large_fern"
+}

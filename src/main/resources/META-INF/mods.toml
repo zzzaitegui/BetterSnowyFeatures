@@ -1,29 +1,29 @@
 modLoader="javafml"
-loaderVersion="${loader_version_range}"
+loaderVersion="[47,)"
 license="MIT"
-# logoFile="logo.png" # NO LOGO YET
+logoFile="nativenature_logo.png"
 
 [[mods]]
-modId="modgov"
-version="1.0.2-1.20.1"
-displayName="Mod.gov"
-# logoFile="logo.png" # NO LOGO YET
+modId="nativenature"
+version="1.1.0-1.20.1"
+displayName="Native Nature"
+logoFile="nativenature_logo.png"
 authors="zzzaitegui"
 description='''
-A comprehensive elections and voting mod for Minecraft 1.20.1 roleplay servers.
-Features political party registration, elections, voting system, ID cards, and pamphlets for creating basic democratic gameplay.
+Craft biome-locked vegetation that preserves its natural coloration when placed in different biomes.
+Build diverse zoos, gardens, and habitats without color mismatches.
 '''
 
-[[dependencies.modgov]]
+[[dependencies.nativenature]]
 modId="forge"
 mandatory=true
-versionRange="${forge_version_range}"
+versionRange="[47.4.9,)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.modgov]]
+[[dependencies.nativenature]]
 modId="minecraft"
 mandatory=true
-versionRange="${minecraft_version_range}"
+versionRange="[1.20.1]"
 ordering="NONE"
 side="BOTH"

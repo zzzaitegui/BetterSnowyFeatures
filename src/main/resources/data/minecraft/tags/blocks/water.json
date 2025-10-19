@@ -1,0 +1,10 @@
+{
+  "replace": false,
+  "values": [
+    "nativenature:glacial_water_block",
+    "nativenature:river_water_block",
+    "nativenature:wetlands_water_block",
+    "nativenature:rainforest_water_block",
+    "nativenature:tropical_water_block"
+  ]
+}
