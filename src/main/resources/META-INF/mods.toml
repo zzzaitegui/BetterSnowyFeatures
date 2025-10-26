@@ -1,27 +1,26 @@
 modLoader="javafml"
 loaderVersion="[47,)"
 license="MIT"
-logoFile="nativenature_logo.png"
 
 [[mods]]
-modId="nativenature"
-version="1.1.0-1.20.1"
-displayName="Native Nature"
-logoFile="nativenature_logo.png"
+modId="bsf"
+version="1.0.0-1.20.1"
+mixinConfigs = ["bsf.mixins.json"]
+displayName="Better Snowy Features"
+logoFile="bsf_logo.png"
 authors="zzzaitegui"
 description='''
-Craft biome-locked vegetation that preserves its natural coloration when placed in different biomes.
-Build diverse zoos, gardens, and habitats without color mismatches.
+Adds snowy textures to trees and plants in cold biomes, plus icicles and always snowy grass blocks for a cohesive winter look.
 '''
 
-[[dependencies.nativenature]]
+[[dependencies.bsf]]
 modId="forge"
 mandatory=true
 versionRange="[47.4.9,)"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.nativenature]]
+[[dependencies.bsf]]
 modId="minecraft"
 mandatory=true
 versionRange="[1.20.1]"

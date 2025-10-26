@@ -1,0 +1,10 @@
+{
+  "variants": {
+    "": [
+      { "model": "bsf:block/icicle", "y": 0 },
+      { "model": "bsf:block/icicle", "y": 90 },
+      { "model": "bsf:block/icicle", "y": 180 },
+      { "model": "bsf:block/icicle", "y": 270 }
+    ]
+  }
+}
