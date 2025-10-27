@@ -69,7 +69,6 @@ public class SnowyPlantBakedModel implements BakedModel {
 
 
         if (!ModConfig.ENABLE_SNOWY_PLANTS.get()) {
-            variantIndex = -1;
             return modelData.derive()
                     .with(VARIANT_INDEX, variantIndex)
                     .build();
