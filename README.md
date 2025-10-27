@@ -17,7 +17,7 @@ In snowy/frozen biomes grass will always look snowy, using the same overlay that
 Plants grow inside snow instead of making holes in the snow layer, the snow below plants is "fake" and just visually rendered when a plant block has 2 or more adjacent snow layers and is also in a snowy biome.
 
 5. Icicles (Worldgen) (Only on FULL version)
-Icicles will generated underneath the leaves of trees that generate in snowy biomes. This works for all tree types.
+Icicles will generated underneath the leaves of trees in snowy biomes. This works for all tree types.
 
 DATAPACK/MOD SUPPORT:
 This mods uses tags to know what biomes are snowy/frozen biomes. If you want to the add/remove the mod's features to other biomes or even modded biomes you just need to add/remove the biome name from the tag, although to remove biomes remember to use (replace": true).
