@@ -26,3 +26,5 @@ The mod already has tags for the following mods: Biomes O' Plenty, Oh The Biomes
 
 CONFIG FILE: 
 If you don't want specific features from the mod, in the config file you can disable snowy plants (grass, ferns, tall grass and large ferns), so they have the normal vanilla texture + they won't grow inside snow layers, you can also disable icicle generation.
+
+CHECK OUT THE MOD HERE: https://www.curseforge.com/minecraft/mc-mods/bsf
