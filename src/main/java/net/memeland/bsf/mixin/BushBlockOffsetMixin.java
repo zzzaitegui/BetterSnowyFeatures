@@ -42,28 +42,23 @@ public abstract class BushBlockOffsetMixin {
             return;
         }
 
-        // Check if snowy plants feature is enabled
-        if (!ModConfig.ENABLE_SNOWY_PLANTS.get()) {
+        if (!ModConfig.ENABLE_PLANT_SNOW_LAYERS.get()) {
             return;
         }
 
         try {
-            // Check if we're in a cold biome
             Minecraft mc = Minecraft.getInstance();
             if (mc.level != null && BiomeTemperatureHelper.isColdAt(mc.level, pos)) {
-                // Check if plant has enough snow neighbors (same logic as SnowyPlantBakedModel)
                 if (hasEnoughSnowNeighbors(level, pos, this.asState())) {
-                    // Plant should use snowy variant - disable offset
                     cir.setReturnValue(Vec3.ZERO);
                 }
             }
         } catch (Exception e) {
-            // Fail silently - let vanilla offset apply
+
         }
     }
 
     private static boolean hasEnoughSnowNeighbors(BlockGetter level, BlockPos pos, BlockState state) {
-        // For tall plants, check at ground level where snow is
         BlockPos checkPos = pos;
         if (state.hasProperty(net.minecraft.world.level.block.state.properties.BlockStateProperties.DOUBLE_BLOCK_HALF)) {
             if (state.getValue(net.minecraft.world.level.block.state.properties.BlockStateProperties.DOUBLE_BLOCK_HALF)
@@ -87,7 +82,7 @@ public abstract class BushBlockOffsetMixin {
                     }
                 }
             } catch (Exception e) {
-                // Skip this direction on error
+
             }
         }
 
