@@ -29,7 +29,7 @@ public class ModConfig {
                 .comment("Enable snow overlay on blocks with snow on top",
                         "Adds a small snow edge to sides of blocks like stone, dirt, wood when snow is above them",
                         "Only works in cold biomes for performance optimization. It is recommended to use with Embeddium or other optimization mods.")
-                .define("enableSnowOverlay", true);
+                .define("enableSnowOverlay", false);
 
         BUILDER.pop();
 
