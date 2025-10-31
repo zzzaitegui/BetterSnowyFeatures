@@ -125,6 +125,6 @@ public class ModConfig {
 
     @SuppressWarnings("removal")
     public static void register() {
-        ModLoadingContext.get().registerConfig(Type.CLIENT, SPEC);
+        ModLoadingContext.get().registerConfig(Type.COMMON, SPEC);
     }
 }
