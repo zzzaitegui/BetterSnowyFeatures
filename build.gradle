@@ -6,11 +6,11 @@ plugins {
     id 'org.spongepowered.mixin' version '0.7.+'
 }
 
-version = '1.0.2-1.20.1'
+version = '1.0.3-1.20.1-FULL'
 group = 'net.memeland.bsf'
 
 base {
-    archivesName = 'bsf'
+    archivesName = 'BetterSnowyFeatures'
 }
 
 // Mojang ships Java 17 to end users in 1.18+, so your mod should target Java 17.

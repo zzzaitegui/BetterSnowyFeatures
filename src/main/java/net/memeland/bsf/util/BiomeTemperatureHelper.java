@@ -1,7 +1,9 @@
 package net.memeland.bsf.util;
 
+import net.memeland.bsf.ModConfig;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.LevelReader;
 import net.minecraft.world.level.biome.Biome;
 import it.unimi.dsi.fastutil.longs.Long2BooleanMap;
@@ -11,6 +13,7 @@ public class BiomeTemperatureHelper {
 
     private static final Long2BooleanMap chunkCache = new Long2BooleanOpenHashMap();
     private static final Long2BooleanMap snowBlockChunkCache = new Long2BooleanOpenHashMap();
+    private static final Object cacheLock = new Object();
 
     private static final int MAX_CACHE_SIZE = 2048;
 
@@ -21,14 +24,39 @@ public class BiomeTemperatureHelper {
 
         long chunkKey = getChunkKey(pos);
 
-        if (chunkCache.containsKey(chunkKey)) {
-            return chunkCache.get(chunkKey);
+        synchronized (cacheLock) {
+            if (chunkCache.containsKey(chunkKey)) {
+                return chunkCache.get(chunkKey);
+            }
         }
 
         Holder<Biome> biomeHolder = level.getBiome(pos);
-        boolean isCold = biomeHolder.is(ModTags.Biomes.SNOWY_BIOMES);
+        ResourceLocation biomeId = getBiomeId(biomeHolder);
 
-        cacheResult(chunkKey, isCold);
+        if (isInList(biomeId, ModConfig.SNOWY_BIOMES_BLACKLIST.get())) {
+            synchronized (cacheLock) {
+                cacheResult(chunkKey, false);
+            }
+            return false;
+        }
+
+        if (isInList(biomeId, ModConfig.SNOWY_BIOMES.get())) {
+            synchronized (cacheLock) {
+                cacheResult(chunkKey, true);
+            }
+            return true;
+        }
+
+        boolean isCold = false;
+        if (ModConfig.USE_TEMPERATURE_FALLBACK.get()) {
+            Biome biome = biomeHolder.value();
+            isCold = biome.coldEnoughToSnow(pos) &&
+                    biome.getPrecipitationAt(pos) == Biome.Precipitation.SNOW;
+        }
+
+        synchronized (cacheLock) {
+            cacheResult(chunkKey, isCold);
+        }
         return isCold;
     }
 
@@ -37,20 +65,22 @@ public class BiomeTemperatureHelper {
             return false;
         }
 
-        Holder<Biome> biomeHolder = level.getBiome(pos);
-
-        if (biomeHolder.is(ModTags.Biomes.SNOW_BLOCK_BIOMES)) {
-            return true;
-        }
-
         long chunkKey = getChunkKey(pos);
-        if (snowBlockChunkCache.containsKey(chunkKey)) {
-            return snowBlockChunkCache.get(chunkKey);
+
+        synchronized (cacheLock) {
+            if (snowBlockChunkCache.containsKey(chunkKey)) {
+                return snowBlockChunkCache.get(chunkKey);
+            }
         }
 
-        boolean isSnowBlock = false;
-        cacheSnowBlockResult(chunkKey, isSnowBlock);
+        Holder<Biome> biomeHolder = level.getBiome(pos);
+        ResourceLocation biomeId = getBiomeId(biomeHolder);
 
+        boolean isSnowBlock = isInList(biomeId, ModConfig.SNOW_BLOCK_BIOMES.get());
+
+        synchronized (cacheLock) {
+            cacheSnowBlockResult(chunkKey, isSnowBlock);
+        }
         return isSnowBlock;
     }
 
@@ -63,6 +93,18 @@ public class BiomeTemperatureHelper {
         return biome.getBaseTemperature();
     }
 
+    @SuppressWarnings("removal")
+    private static ResourceLocation getBiomeId(Holder<Biome> biomeHolder) {
+        return biomeHolder.unwrapKey()
+                .map(key -> key.location())
+                .orElse(new ResourceLocation("minecraft", "plains"));
+    }
+
+    private static boolean isInList(ResourceLocation biomeId, java.util.List<? extends String> list) {
+        String biomeIdStr = biomeId.toString();
+        return list.stream().anyMatch(entry -> entry.equalsIgnoreCase(biomeIdStr));
+    }
+
     private static long getChunkKey(BlockPos pos) {
         int chunkX = pos.getX() >> 4;
         int chunkZ = pos.getZ() >> 4;
@@ -72,7 +114,7 @@ public class BiomeTemperatureHelper {
 
     private static void cacheResult(long chunkKey, boolean isCold) {
         if (chunkCache.size() >= MAX_CACHE_SIZE) {
-            clearCache();
+            chunkCache.clear();
         }
 
         chunkCache.put(chunkKey, isCold);
@@ -80,23 +122,29 @@ public class BiomeTemperatureHelper {
 
     private static void cacheSnowBlockResult(long chunkKey, boolean isSnowBlock) {
         if (snowBlockChunkCache.size() >= MAX_CACHE_SIZE) {
-            clearSnowBlockCache();
+            snowBlockChunkCache.clear();
         }
 
         snowBlockChunkCache.put(chunkKey, isSnowBlock);
     }
 
     public static void clearCache() {
-        chunkCache.clear();
+        synchronized (cacheLock) {
+            chunkCache.clear();
+        }
     }
 
     public static void clearSnowBlockCache() {
-        snowBlockChunkCache.clear();
+        synchronized (cacheLock) {
+            snowBlockChunkCache.clear();
+        }
     }
 
     public static void clearCacheAt(BlockPos pos) {
         long chunkKey = getChunkKey(pos);
-        chunkCache.remove(chunkKey);
-        snowBlockChunkCache.remove(chunkKey);
+        synchronized (cacheLock) {
+            chunkCache.remove(chunkKey);
+            snowBlockChunkCache.remove(chunkKey);
+        }
     }
 }

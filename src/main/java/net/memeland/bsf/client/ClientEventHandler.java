@@ -1,10 +1,7 @@
 package net.memeland.bsf.client;
 
 import net.memeland.bsf.BetterSnowyFeaturesMod;
-import net.memeland.bsf.client.model.SnowyDirtBakedModel;
-import net.memeland.bsf.client.model.SnowyFoliageBakedModel;
-import net.memeland.bsf.client.model.SnowyGrassBakedModel;
-import net.memeland.bsf.client.model.SnowyPlantBakedModel;
+import net.memeland.bsf.client.model.*;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;

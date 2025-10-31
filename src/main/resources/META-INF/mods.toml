@@ -4,7 +4,7 @@ license="MIT"
 
 [[mods]]
 modId="bsf"
-version="1.0.2-1.20.1"
+version="1.0.3-1.20.1"
 mixinConfigs = ["bsf.mixins.json"]
 displayName="Better Snowy Features"
 logoFile="bsf_logo.png"
