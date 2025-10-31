@@ -29,8 +29,8 @@ public class ModConfig {
         ENABLE_SNOW_OVERLAY = BUILDER
                 .comment("Enable snow overlay on blocks with snow on top",
                         "Adds a small snow edge to sides of blocks like stone, dirt, wood when snow is above them",
-                        "Only works in cold biomes for performance optimization")
-                .define("enableSnowOverlay", true);
+                        "Only works in cold biomes for performance optimization. It is recommended to use with Embeddium or other optimization mods.")
+                .define("enableSnowOverlay", false);
 
         ENABLE_ICICLES = BUILDER
                 .comment("Enable icicle generation on trees in cold biomes")
