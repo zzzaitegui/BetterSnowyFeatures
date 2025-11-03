@@ -11,7 +11,6 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.ChunkPos;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraft.world.level.chunk.LevelChunk;
 import net.minecraft.world.level.levelgen.Heightmap;
 import net.minecraftforge.event.TickEvent;
@@ -79,10 +78,6 @@ public class IcicleWorldgenDecorator {
             return;
         }
 
-        if (!chunk.getStatus().isOrAfter(ChunkStatus.FULL)) {
-            return;
-        }
-
         ChunkPos chunkPos = chunk.getPos();
 
         Boolean decorated = chunkDecorationStatus.get(chunkPos);
@@ -131,7 +126,7 @@ public class IcicleWorldgenDecorator {
                 continue;
             }
 
-            LevelChunk chunk = (LevelChunk) serverLevel.getChunk(chunkPos.x, chunkPos.z, ChunkStatus.FULL, false);
+            LevelChunk chunk = serverLevel.getChunkSource().getChunkNow(chunkPos.x, chunkPos.z);
             if (chunk == null) {
                 continue;
             }

@@ -3,6 +3,7 @@ package net.memeland.bsf.client;
 import net.memeland.bsf.BetterSnowyFeaturesMod;
 import net.memeland.bsf.client.model.SnowOverlayBakedModel;
 import net.minecraft.client.resources.model.BakedModel;
+import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
@@ -41,39 +42,37 @@ public class SnowOverlayModelRegistry {
     @SubscribeEvent
     public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
         for (ResourceLocation modelLoc : SNOWY_TEXTURE_MODELS.values()) {
-            event.register(modelLoc);
+            event.register(new ModelResourceLocation(modelLoc, ""));
         }
     }
 
     @SubscribeEvent
     public static void onModelBake(ModelEvent.ModifyBakingResult event) {
-        Map<ResourceLocation, BakedModel> modelRegistry = event.getModels();
+        Map<ModelResourceLocation, BakedModel> modelRegistry = event.getModels();
 
         Map<String, BakedModel> snowyModels = new HashMap<>();
         for (Map.Entry<String, ResourceLocation> entry : SNOWY_TEXTURE_MODELS.entrySet()) {
-            BakedModel snowyModel = modelRegistry.get(entry.getValue());
+            BakedModel snowyModel = modelRegistry.get(new ModelResourceLocation(entry.getValue(), ""));
             if (snowyModel != null) {
                 snowyModels.put(entry.getKey(), snowyModel);
             }
         }
 
-        for (Map.Entry<ResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
-            ResourceLocation key = entry.getKey();
+        for (Map.Entry<ModelResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
+            ModelResourceLocation mrl = entry.getKey();
 
-            if (key instanceof net.minecraft.client.resources.model.ModelResourceLocation mrl) {
-                if (mrl.getNamespace().equals("minecraft")) {
-                    for (Block block : OVERLAY_BLOCKS) {
-                        String blockName = getBlockName(block);
-                        if (mrl.getPath().equals(blockName)) {
-                            BakedModel existingModel = entry.getValue();
-                            BakedModel snowyModel = snowyModels.get(blockName);
+            if (mrl.id().getNamespace().equals("minecraft")) {
+                for (Block block : OVERLAY_BLOCKS) {
+                    String blockName = getBlockName(block);
+                    if (mrl.id().getPath().equals(blockName)) {
+                        BakedModel existingModel = entry.getValue();
+                        BakedModel snowyModel = snowyModels.get(blockName);
 
-                            if (snowyModel != null && !(existingModel instanceof SnowOverlayBakedModel)) {
-                                SnowOverlayBakedModel wrappedModel = new SnowOverlayBakedModel(existingModel, snowyModel);
-                                modelRegistry.put(key, wrappedModel);
-                            }
-                            break;
+                        if (snowyModel != null && !(existingModel instanceof SnowOverlayBakedModel)) {
+                            SnowOverlayBakedModel wrappedModel = new SnowOverlayBakedModel(existingModel, snowyModel);
+                            modelRegistry.put(mrl, wrappedModel);
                         }
+                        break;
                     }
                 }
             }

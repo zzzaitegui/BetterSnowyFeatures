@@ -47,7 +47,7 @@ public class ClientEventHandler {
         SNOWY_VINE_MODELS.put("west", ResourceLocation.fromNamespaceAndPath(BetterSnowyFeaturesMod.MOD_ID, "block/snowy_vine_e"));
         SNOWY_VINE_MODELS.put("up", ResourceLocation.fromNamespaceAndPath(BetterSnowyFeaturesMod.MOD_ID, "block/snowy_vine_u"));
 
-        setupPlantModels("grass");
+        setupPlantModels("short_grass");
         setupPlantModels("fern");
 
         setupTallPlantModels("tall_grass");
@@ -87,37 +87,37 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
-        event.register(CUSTOM_SNOWY_GRASS_MODEL);
-        event.register(CUSTOM_SNOWY_DIRT_MODEL);
+        event.register(new ModelResourceLocation(CUSTOM_SNOWY_GRASS_MODEL, ""));
+        event.register(new ModelResourceLocation(CUSTOM_SNOWY_DIRT_MODEL, ""));
 
         for (ResourceLocation model : SNOWY_FOLIAGE_MODELS.values()) {
-            event.register(model);
+            event.register(new ModelResourceLocation(model, ""));
         }
 
         for (ResourceLocation model : SNOWY_VINE_MODELS.values()) {
-            event.register(model);
+            event.register(new ModelResourceLocation(model, ""));
         }
 
         for (ResourceLocation model : SNOWY_PLANT_TEXTURE_MODELS.values()) {
-            event.register(model);
+            event.register(new ModelResourceLocation(model, ""));
         }
 
         for (Map<Integer, ResourceLocation> variants : SNOWY_PLANT_VARIANT_MODELS.values()) {
             for (ResourceLocation model : variants.values()) {
-                event.register(model);
+                event.register(new ModelResourceLocation(model, ""));
             }
         }
 
         for (Map<String, ResourceLocation> halfModels : SNOWY_TALL_PLANT_TEXTURE_MODELS.values()) {
             for (ResourceLocation model : halfModels.values()) {
-                event.register(model);
+                event.register(new ModelResourceLocation(model, ""));
             }
         }
 
         for (Map<String, Map<Integer, ResourceLocation>> halfVariants : SNOWY_TALL_PLANT_VARIANT_MODELS.values()) {
             for (Map<Integer, ResourceLocation> variants : halfVariants.values()) {
                 for (ResourceLocation model : variants.values()) {
-                    event.register(model);
+                    event.register(new ModelResourceLocation(model, ""));
                 }
             }
         }
@@ -125,7 +125,7 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onModifyBakingResult(ModelEvent.ModifyBakingResult event) {
-        Map<ResourceLocation, BakedModel> modelRegistry = event.getModels();
+        Map<ModelResourceLocation, BakedModel> modelRegistry = event.getModels();
 
         replaceGrassBlockModel(modelRegistry);
         replaceDirtBlockModel(modelRegistry);
@@ -135,12 +135,12 @@ public class ClientEventHandler {
         replaceTallPlantModels(modelRegistry);
     }
 
-    private static void replaceGrassBlockModel(Map<ResourceLocation, BakedModel> modelRegistry) {
+    private static void replaceGrassBlockModel(Map<ModelResourceLocation, BakedModel> modelRegistry) {
         ResourceLocation grassBlockId = ResourceLocation.fromNamespaceAndPath("minecraft", "grass_block");
         ModelResourceLocation normalGrassModel = new ModelResourceLocation(grassBlockId, "snowy=false");
 
         BakedModel originalNormal = modelRegistry.get(normalGrassModel);
-        BakedModel customSnowy = modelRegistry.get(CUSTOM_SNOWY_GRASS_MODEL);
+        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(CUSTOM_SNOWY_GRASS_MODEL, ""));
 
         if (originalNormal != null && customSnowy != null) {
             SnowyGrassBakedModel customModel = new SnowyGrassBakedModel(originalNormal, customSnowy);
@@ -148,26 +148,26 @@ public class ClientEventHandler {
         }
     }
 
-    private static void replaceDirtBlockModel(Map<ResourceLocation, BakedModel> modelRegistry) {
-        ResourceLocation dirtBlockId = ResourceLocation.fromNamespaceAndPath("minecraft", "dirt");
-        BakedModel customSnowy = modelRegistry.get(CUSTOM_SNOWY_DIRT_MODEL);
+    private static void replaceDirtBlockModel(Map<ModelResourceLocation, BakedModel> modelRegistry) {
+        ResourceLocation dirtId = ResourceLocation.fromNamespaceAndPath("minecraft", "dirt");
+        ModelResourceLocation normalDirtModel = new ModelResourceLocation(dirtId, "");
 
-        if (customSnowy == null) return;
+        BakedModel originalNormal = modelRegistry.get(normalDirtModel);
+        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(CUSTOM_SNOWY_DIRT_MODEL, ""));
 
-        for (Map.Entry<ResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
-            ResourceLocation key = entry.getKey();
+        if (originalNormal != null && customSnowy != null) {
+            SnowyDirtBakedModel customModel = new SnowyDirtBakedModel(originalNormal, customSnowy);
 
-            if (key instanceof ModelResourceLocation mrl) {
-                if (mrl.getNamespace().equals("minecraft") && mrl.getPath().equals("dirt")) {
-                    BakedModel originalModel = entry.getValue();
-                    SnowyDirtBakedModel customModel = new SnowyDirtBakedModel(originalModel, customSnowy);
+            for (Map.Entry<ModelResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
+                ModelResourceLocation key = entry.getKey();
+                if (key.id().getNamespace().equals("minecraft") && key.id().getPath().equals("dirt")) {
                     modelRegistry.put(key, customModel);
                 }
             }
         }
     }
 
-    private static void replaceFoliageModels(Map<ResourceLocation, BakedModel> modelRegistry) {
+    private static void replaceFoliageModels(Map<ModelResourceLocation, BakedModel> modelRegistry) {
         for (Map.Entry<String, ResourceLocation> entry : SNOWY_FOLIAGE_MODELS.entrySet()) {
             String blockName = entry.getKey();
             ResourceLocation customModelLocation = entry.getValue();
@@ -175,28 +175,26 @@ public class ClientEventHandler {
         }
     }
 
-    private static void replaceFoliageBlock(Map<ResourceLocation, BakedModel> modelRegistry, String blockName,
+    private static void replaceFoliageBlock(Map<ModelResourceLocation, BakedModel> modelRegistry, String blockName,
                                             ResourceLocation customModelLocation) {
-        BakedModel customSnowy = modelRegistry.get(customModelLocation);
+        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(customModelLocation, ""));
         if (customSnowy == null) return;
 
-        for (Map.Entry<ResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
-            ResourceLocation key = entry.getKey();
+        for (Map.Entry<ModelResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
+            ModelResourceLocation mrl = entry.getKey();
 
-            if (key instanceof ModelResourceLocation mrl) {
-                if (mrl.getNamespace().equals("minecraft") && mrl.getPath().equals(blockName)) {
-                    BakedModel originalModel = entry.getValue();
-                    SnowyFoliageBakedModel customModel = new SnowyFoliageBakedModel(originalModel, customSnowy);
-                    modelRegistry.put(key, customModel);
-                }
+            if (mrl.id().getNamespace().equals("minecraft") && mrl.id().getPath().equals(blockName)) {
+                BakedModel originalModel = entry.getValue();
+                SnowyFoliageBakedModel customModel = new SnowyFoliageBakedModel(originalModel, customSnowy);
+                modelRegistry.put(mrl, customModel);
             }
         }
     }
 
-    private static void replaceVineModels(Map<ResourceLocation, BakedModel> modelRegistry) {
+    private static void replaceVineModels(Map<ModelResourceLocation, BakedModel> modelRegistry) {
         Map<String, BakedModel> snowyVineModels = new HashMap<>();
         for (Map.Entry<String, ResourceLocation> entry : SNOWY_VINE_MODELS.entrySet()) {
-            BakedModel model = modelRegistry.get(entry.getValue());
+            BakedModel model = modelRegistry.get(new ModelResourceLocation(entry.getValue(), ""));
             if (model != null) {
                 snowyVineModels.put(entry.getKey(), model);
             }
@@ -204,74 +202,70 @@ public class ClientEventHandler {
 
         if (snowyVineModels.isEmpty()) return;
 
-        for (Map.Entry<ResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
-            ResourceLocation key = entry.getKey();
+        for (Map.Entry<ModelResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
+            ModelResourceLocation mrl = entry.getKey();
 
-            if (key instanceof ModelResourceLocation mrl) {
-                if (mrl.getNamespace().equals("minecraft") && mrl.getPath().equals("vine")) {
-                    String variant = mrl.getVariant();
-                    BakedModel originalModel = entry.getValue();
+            if (mrl.id().getNamespace().equals("minecraft") && mrl.id().getPath().equals("vine")) {
+                String variant = mrl.variant();
+                BakedModel originalModel = entry.getValue();
 
-                    BakedModel snowyModel = null;
-                    if (variant.contains("north=true")) {
-                        snowyModel = snowyVineModels.get("north");
-                    } else if (variant.contains("south=true")) {
-                        snowyModel = snowyVineModels.get("south");
-                    } else if (variant.contains("east=true")) {
-                        snowyModel = snowyVineModels.get("east");
-                    } else if (variant.contains("west=true")) {
-                        snowyModel = snowyVineModels.get("west");
-                    } else if (variant.contains("up=true")) {
-                        snowyModel = snowyVineModels.get("up");
-                    }
+                BakedModel snowyModel = null;
+                if (variant.contains("north=true")) {
+                    snowyModel = snowyVineModels.get("north");
+                } else if (variant.contains("south=true")) {
+                    snowyModel = snowyVineModels.get("south");
+                } else if (variant.contains("east=true")) {
+                    snowyModel = snowyVineModels.get("east");
+                } else if (variant.contains("west=true")) {
+                    snowyModel = snowyVineModels.get("west");
+                } else if (variant.contains("up=true")) {
+                    snowyModel = snowyVineModels.get("up");
+                }
 
-                    if (snowyModel != null) {
-                        SnowyFoliageBakedModel customModel = new SnowyFoliageBakedModel(originalModel, snowyModel);
-                        modelRegistry.put(key, customModel);
-                    }
+                if (snowyModel != null) {
+                    SnowyFoliageBakedModel customModel = new SnowyFoliageBakedModel(originalModel, snowyModel);
+                    modelRegistry.put(mrl, customModel);
                 }
             }
         }
     }
 
-    private static void replacePlantModels(Map<ResourceLocation, BakedModel> modelRegistry) {
+    private static void replacePlantModels(Map<ModelResourceLocation, BakedModel> modelRegistry) {
         for (String plantName : SNOWY_PLANT_TEXTURE_MODELS.keySet()) {
             ResourceLocation textureModelLoc = SNOWY_PLANT_TEXTURE_MODELS.get(plantName);
             Map<Integer, ResourceLocation> variantLocs = SNOWY_PLANT_VARIANT_MODELS.get(plantName);
 
-            BakedModel snowyTextureModel = modelRegistry.get(textureModelLoc);
+            BakedModel snowyTextureModel = modelRegistry.get(new ModelResourceLocation(textureModelLoc, ""));
             if (snowyTextureModel == null) continue;
 
             Map<Integer, BakedModel> variantModels = new HashMap<>();
             for (Map.Entry<Integer, ResourceLocation> variant : variantLocs.entrySet()) {
-                BakedModel variantModel = modelRegistry.get(variant.getValue());
+                BakedModel variantModel = modelRegistry.get(new ModelResourceLocation(variant.getValue(), ""));
                 if (variantModel != null) {
                     variantModels.put(variant.getKey(), variantModel);
                 }
             }
 
-            for (Map.Entry<ResourceLocation, BakedModel> modelEntry : modelRegistry.entrySet()) {
-                ResourceLocation key = modelEntry.getKey();
+            for (Map.Entry<ModelResourceLocation, BakedModel> modelEntry : modelRegistry.entrySet()) {
+                ModelResourceLocation mrl = modelEntry.getKey();
 
-                if (key instanceof ModelResourceLocation mrl) {
-                    if (mrl.getNamespace().equals("minecraft") && mrl.getPath().equals(plantName)) {
-                        BakedModel originalModel = modelEntry.getValue();
-                        SnowyPlantBakedModel customModel = new SnowyPlantBakedModel(
-                                originalModel, snowyTextureModel, variantModels);
-                        modelRegistry.put(key, customModel);
-                    }
+                if (mrl.id().getNamespace().equals("minecraft") && mrl.id().getPath().equals(plantName)) {
+                    BakedModel originalModel = modelEntry.getValue();
+                    SnowyPlantBakedModel customModel = new SnowyPlantBakedModel(
+                            originalModel, snowyTextureModel, variantModels);
+                    modelRegistry.put(mrl, customModel);
                 }
             }
         }
     }
 
-    private static void replaceTallPlantModels(Map<ResourceLocation, BakedModel> modelRegistry) {
+    private static void replaceTallPlantModels(Map<ModelResourceLocation, BakedModel> modelRegistry) {
         for (String blockName : SNOWY_TALL_PLANT_TEXTURE_MODELS.keySet()) {
             Map<String, ResourceLocation> textureModelLocs = SNOWY_TALL_PLANT_TEXTURE_MODELS.get(blockName);
             Map<String, Map<Integer, ResourceLocation>> variantLocs = SNOWY_TALL_PLANT_VARIANT_MODELS.get(blockName);
 
-            BakedModel upperTextureModel = modelRegistry.get(textureModelLocs.get("upper"));
-            BakedModel lowerTextureModel = modelRegistry.get(textureModelLocs.get("lower"));
+            BakedModel upperTextureModel = modelRegistry.get(new ModelResourceLocation(textureModelLocs.get("upper"), ""));
+            BakedModel lowerTextureModel = modelRegistry.get(new ModelResourceLocation(textureModelLocs.get("lower"), ""));
 
             if (upperTextureModel == null || lowerTextureModel == null) continue;
 
@@ -279,32 +273,30 @@ public class ClientEventHandler {
             Map<Integer, BakedModel> lowerVariants = new HashMap<>();
 
             for (Map.Entry<Integer, ResourceLocation> variant : variantLocs.get("upper").entrySet()) {
-                BakedModel model = modelRegistry.get(variant.getValue());
+                BakedModel model = modelRegistry.get(new ModelResourceLocation(variant.getValue(), ""));
                 if (model != null) upperVariants.put(variant.getKey(), model);
             }
 
             for (Map.Entry<Integer, ResourceLocation> variant : variantLocs.get("lower").entrySet()) {
-                BakedModel model = modelRegistry.get(variant.getValue());
+                BakedModel model = modelRegistry.get(new ModelResourceLocation(variant.getValue(), ""));
                 if (model != null) lowerVariants.put(variant.getKey(), model);
             }
 
-            for (Map.Entry<ResourceLocation, BakedModel> modelEntry : modelRegistry.entrySet()) {
-                ResourceLocation key = modelEntry.getKey();
+            for (Map.Entry<ModelResourceLocation, BakedModel> modelEntry : modelRegistry.entrySet()) {
+                ModelResourceLocation mrl = modelEntry.getKey();
 
-                if (key instanceof ModelResourceLocation mrl) {
-                    if (mrl.getNamespace().equals("minecraft") && mrl.getPath().equals(blockName)) {
-                        String variant = mrl.getVariant();
-                        BakedModel originalModel = modelEntry.getValue();
+                if (mrl.id().getNamespace().equals("minecraft") && mrl.id().getPath().equals(blockName)) {
+                    String variant = mrl.variant();
+                    BakedModel originalModel = modelEntry.getValue();
 
-                        if (variant.contains("half=upper")) {
-                            SnowyPlantBakedModel customModel = new SnowyPlantBakedModel(
-                                    originalModel, upperTextureModel, upperVariants);
-                            modelRegistry.put(key, customModel);
-                        } else if (variant.contains("half=lower")) {
-                            SnowyPlantBakedModel customModel = new SnowyPlantBakedModel(
-                                    originalModel, lowerTextureModel, lowerVariants);
-                            modelRegistry.put(key, customModel);
-                        }
+                    if (variant.contains("half=upper")) {
+                        SnowyPlantBakedModel customModel = new SnowyPlantBakedModel(
+                                originalModel, upperTextureModel, upperVariants);
+                        modelRegistry.put(mrl, customModel);
+                    } else if (variant.contains("half=lower")) {
+                        SnowyPlantBakedModel customModel = new SnowyPlantBakedModel(
+                                originalModel, lowerTextureModel, lowerVariants);
+                        modelRegistry.put(mrl, customModel);
                     }
                 }
             }

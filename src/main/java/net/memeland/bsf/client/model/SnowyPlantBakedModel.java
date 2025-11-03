@@ -17,7 +17,6 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraft.world.level.chunk.ChunkStatus;
 import net.minecraftforge.client.model.data.ModelData;
 import net.minecraftforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.Nullable;
@@ -149,7 +148,7 @@ public class SnowyPlantBakedModel implements BakedModel {
     private static boolean isChunkLoaded(BlockAndTintGetter level, BlockPos pos) {
         try {
             if (level instanceof net.minecraft.client.multiplayer.ClientLevel clientLevel) {
-                ChunkAccess chunk = clientLevel.getChunk(pos.getX() >> 4, pos.getZ() >> 4, ChunkStatus.FULL, false);
+                ChunkAccess chunk = clientLevel.getChunkSource().getChunkNow(pos.getX() >> 4, pos.getZ() >> 4);
                 return chunk != null;
             }
             return true;
