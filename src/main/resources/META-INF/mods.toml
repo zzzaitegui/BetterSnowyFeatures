@@ -10,7 +10,7 @@ displayName="Better Snowy Features"
 logoFile="bsf_logo.png"
 authors="zzzaitegui"
 description='''
-Adds snowy textures to trees and plants in cold biomes, plus icicles and always snowy grass blocks for a cohesive winter look.
+Adds snowy textures to trees and plants in cold biomes, plus always snowy grass blocks for a cohesive winter look.
 '''
 
 [[dependencies.bsf]]

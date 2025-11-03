@@ -1,12 +1,7 @@
 package net.memeland.bsf;
 
-import net.memeland.bsf.block.ModBlocks;
 import net.memeland.bsf.client.model.SnowOverlayBakedModel;
-import net.memeland.bsf.item.ModCreativeModeTab;
-import net.memeland.bsf.item.ModItems;
 import net.memeland.bsf.util.BiomeTemperatureHelper;
-import net.minecraft.client.renderer.ItemBlockRenderTypes;
-import net.minecraft.client.renderer.RenderType;
 import net.minecraftforge.api.distmarker.Dist;
 import net.minecraftforge.client.event.ClientPlayerNetworkEvent;
 import net.minecraftforge.common.MinecraftForge;
@@ -24,15 +19,11 @@ import org.slf4j.LoggerFactory;
 public class BetterSnowyFeaturesMod {
 
     public static final String MOD_ID = "bsf";
-    public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
     public BetterSnowyFeaturesMod(FMLJavaModLoadingContext context) {
         IEventBus modEventBus = context.getModEventBus();
 
         ModConfig.register();
-        ModCreativeModeTab.CREATIVE_MODE_TABS.register(modEventBus);
-        ModBlocks.register(modEventBus);
-        ModItems.register(modEventBus);
 
         modEventBus.addListener(this::commonSetup);
         MinecraftForge.EVENT_BUS.register(this);
@@ -49,7 +40,6 @@ public class BetterSnowyFeaturesMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
-                ItemBlockRenderTypes.setRenderLayer(ModBlocks.ICICLE.get(), RenderType.translucent());
             });
         }
     }

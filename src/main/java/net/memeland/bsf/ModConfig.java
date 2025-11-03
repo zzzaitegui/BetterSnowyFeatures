@@ -13,7 +13,6 @@ public class ModConfig {
     public static final ForgeConfigSpec.BooleanValue ENABLE_PLANT_SNOW_LAYERS;
     public static final ForgeConfigSpec.BooleanValue USE_TEMPERATURE_FALLBACK;
     public static final ForgeConfigSpec.BooleanValue ENABLE_SNOW_OVERLAY;
-    public static final ForgeConfigSpec.BooleanValue ENABLE_ICICLES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> SNOWY_BIOMES;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> SNOWY_BIOMES_BLACKLIST;
     public static final ForgeConfigSpec.ConfigValue<List<? extends String>> SNOW_BLOCK_BIOMES;
@@ -31,10 +30,6 @@ public class ModConfig {
                         "Adds a small snow edge to sides of blocks like stone, dirt, wood when snow is above them",
                         "Only works in cold biomes for performance optimization. It is recommended to use with Embeddium or other optimization mods.")
                 .define("enableSnowOverlay", false);
-
-        ENABLE_ICICLES = BUILDER
-                .comment("Enable icicle generation on trees in cold biomes")
-                .define("enableIcicles", true);
 
         BUILDER.pop();
 
@@ -125,6 +120,6 @@ public class ModConfig {
 
     @SuppressWarnings("removal")
     public static void register() {
-        ModLoadingContext.get().registerConfig(Type.COMMON, SPEC);
+        ModLoadingContext.get().registerConfig(Type.CLIENT, SPEC);
     }
 }
