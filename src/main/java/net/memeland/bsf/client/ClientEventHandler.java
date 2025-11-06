@@ -5,16 +5,16 @@ import net.memeland.bsf.client.model.*;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
 import net.minecraft.resources.ResourceLocation;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.api.distmarker.Dist;
+import net.neoforged.bus.api.SubscribeEvent;
+import net.neoforged.fml.common.EventBusSubscriber;
+import net.neoforged.neoforge.client.event.ModelEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
 @SuppressWarnings("removal")
-@Mod.EventBusSubscriber(modid = BetterSnowyFeaturesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
+@EventBusSubscriber(modid = BetterSnowyFeaturesMod.MOD_ID, bus = EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class ClientEventHandler {
 
     private static final ResourceLocation CUSTOM_SNOWY_GRASS_MODEL =
@@ -87,40 +87,43 @@ public class ClientEventHandler {
 
     @SubscribeEvent
     public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
-        event.register(new ModelResourceLocation(CUSTOM_SNOWY_GRASS_MODEL, ""));
-        event.register(new ModelResourceLocation(CUSTOM_SNOWY_DIRT_MODEL, ""));
+        event.register(new ModelResourceLocation(CUSTOM_SNOWY_GRASS_MODEL, "standalone"));
+        event.register(new ModelResourceLocation(CUSTOM_SNOWY_DIRT_MODEL, "standalone"));
 
         for (ResourceLocation model : SNOWY_FOLIAGE_MODELS.values()) {
-            event.register(new ModelResourceLocation(model, ""));
+            event.register(new ModelResourceLocation(model, "standalone"));
         }
 
         for (ResourceLocation model : SNOWY_VINE_MODELS.values()) {
-            event.register(new ModelResourceLocation(model, ""));
+            event.register(new ModelResourceLocation(model, "standalone"));
         }
 
         for (ResourceLocation model : SNOWY_PLANT_TEXTURE_MODELS.values()) {
-            event.register(new ModelResourceLocation(model, ""));
+            event.register(new ModelResourceLocation(model, "standalone"));
         }
 
         for (Map<Integer, ResourceLocation> variants : SNOWY_PLANT_VARIANT_MODELS.values()) {
             for (ResourceLocation model : variants.values()) {
-                event.register(new ModelResourceLocation(model, ""));
+                event.register(new ModelResourceLocation(model, "standalone"));
             }
         }
 
         for (Map<String, ResourceLocation> halfModels : SNOWY_TALL_PLANT_TEXTURE_MODELS.values()) {
             for (ResourceLocation model : halfModels.values()) {
-                event.register(new ModelResourceLocation(model, ""));
+                event.register(new ModelResourceLocation(model, "standalone"));
             }
         }
 
         for (Map<String, Map<Integer, ResourceLocation>> halfVariants : SNOWY_TALL_PLANT_VARIANT_MODELS.values()) {
             for (Map<Integer, ResourceLocation> variants : halfVariants.values()) {
                 for (ResourceLocation model : variants.values()) {
-                    event.register(new ModelResourceLocation(model, ""));
+                    event.register(new ModelResourceLocation(model, "standalone"));
                 }
             }
         }
+
+        // Register snow overlay models
+        SnowOverlayModelRegistry.registerAdditionalModels(event);
     }
 
     @SubscribeEvent
@@ -133,6 +136,9 @@ public class ClientEventHandler {
         replaceVineModels(modelRegistry);
         replacePlantModels(modelRegistry);
         replaceTallPlantModels(modelRegistry);
+
+        // Replace snow overlay models
+        SnowOverlayModelRegistry.replaceSnowOverlayModels(modelRegistry);
     }
 
     private static void replaceGrassBlockModel(Map<ModelResourceLocation, BakedModel> modelRegistry) {
@@ -140,7 +146,7 @@ public class ClientEventHandler {
         ModelResourceLocation normalGrassModel = new ModelResourceLocation(grassBlockId, "snowy=false");
 
         BakedModel originalNormal = modelRegistry.get(normalGrassModel);
-        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(CUSTOM_SNOWY_GRASS_MODEL, ""));
+        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(CUSTOM_SNOWY_GRASS_MODEL, "standalone"));
 
         if (originalNormal != null && customSnowy != null) {
             SnowyGrassBakedModel customModel = new SnowyGrassBakedModel(originalNormal, customSnowy);
@@ -153,7 +159,7 @@ public class ClientEventHandler {
         ModelResourceLocation normalDirtModel = new ModelResourceLocation(dirtId, "");
 
         BakedModel originalNormal = modelRegistry.get(normalDirtModel);
-        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(CUSTOM_SNOWY_DIRT_MODEL, ""));
+        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(CUSTOM_SNOWY_DIRT_MODEL, "standalone"));
 
         if (originalNormal != null && customSnowy != null) {
             SnowyDirtBakedModel customModel = new SnowyDirtBakedModel(originalNormal, customSnowy);
@@ -177,7 +183,7 @@ public class ClientEventHandler {
 
     private static void replaceFoliageBlock(Map<ModelResourceLocation, BakedModel> modelRegistry, String blockName,
                                             ResourceLocation customModelLocation) {
-        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(customModelLocation, ""));
+        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(customModelLocation, "standalone"));
         if (customSnowy == null) return;
 
         for (Map.Entry<ModelResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
@@ -194,7 +200,7 @@ public class ClientEventHandler {
     private static void replaceVineModels(Map<ModelResourceLocation, BakedModel> modelRegistry) {
         Map<String, BakedModel> snowyVineModels = new HashMap<>();
         for (Map.Entry<String, ResourceLocation> entry : SNOWY_VINE_MODELS.entrySet()) {
-            BakedModel model = modelRegistry.get(new ModelResourceLocation(entry.getValue(), ""));
+            BakedModel model = modelRegistry.get(new ModelResourceLocation(entry.getValue(), "standalone"));
             if (model != null) {
                 snowyVineModels.put(entry.getKey(), model);
             }
@@ -235,12 +241,12 @@ public class ClientEventHandler {
             ResourceLocation textureModelLoc = SNOWY_PLANT_TEXTURE_MODELS.get(plantName);
             Map<Integer, ResourceLocation> variantLocs = SNOWY_PLANT_VARIANT_MODELS.get(plantName);
 
-            BakedModel snowyTextureModel = modelRegistry.get(new ModelResourceLocation(textureModelLoc, ""));
+            BakedModel snowyTextureModel = modelRegistry.get(new ModelResourceLocation(textureModelLoc, "standalone"));
             if (snowyTextureModel == null) continue;
 
             Map<Integer, BakedModel> variantModels = new HashMap<>();
             for (Map.Entry<Integer, ResourceLocation> variant : variantLocs.entrySet()) {
-                BakedModel variantModel = modelRegistry.get(new ModelResourceLocation(variant.getValue(), ""));
+                BakedModel variantModel = modelRegistry.get(new ModelResourceLocation(variant.getValue(), "standalone"));
                 if (variantModel != null) {
                     variantModels.put(variant.getKey(), variantModel);
                 }
@@ -264,8 +270,8 @@ public class ClientEventHandler {
             Map<String, ResourceLocation> textureModelLocs = SNOWY_TALL_PLANT_TEXTURE_MODELS.get(blockName);
             Map<String, Map<Integer, ResourceLocation>> variantLocs = SNOWY_TALL_PLANT_VARIANT_MODELS.get(blockName);
 
-            BakedModel upperTextureModel = modelRegistry.get(new ModelResourceLocation(textureModelLocs.get("upper"), ""));
-            BakedModel lowerTextureModel = modelRegistry.get(new ModelResourceLocation(textureModelLocs.get("lower"), ""));
+            BakedModel upperTextureModel = modelRegistry.get(new ModelResourceLocation(textureModelLocs.get("upper"), "standalone"));
+            BakedModel lowerTextureModel = modelRegistry.get(new ModelResourceLocation(textureModelLocs.get("lower"), "standalone"));
 
             if (upperTextureModel == null || lowerTextureModel == null) continue;
 
@@ -273,12 +279,12 @@ public class ClientEventHandler {
             Map<Integer, BakedModel> lowerVariants = new HashMap<>();
 
             for (Map.Entry<Integer, ResourceLocation> variant : variantLocs.get("upper").entrySet()) {
-                BakedModel model = modelRegistry.get(new ModelResourceLocation(variant.getValue(), ""));
+                BakedModel model = modelRegistry.get(new ModelResourceLocation(variant.getValue(), "standalone"));
                 if (model != null) upperVariants.put(variant.getKey(), model);
             }
 
             for (Map.Entry<Integer, ResourceLocation> variant : variantLocs.get("lower").entrySet()) {
-                BakedModel model = modelRegistry.get(new ModelResourceLocation(variant.getValue(), ""));
+                BakedModel model = modelRegistry.get(new ModelResourceLocation(variant.getValue(), "standalone"));
                 if (model != null) lowerVariants.put(variant.getKey(), model);
             }
 

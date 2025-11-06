@@ -1,6 +1,6 @@
 package net.memeland.bsf.client.model;
 
-import net.memeland.bsf.ModConfig;
+import net.memeland.bsf.ModConfigs;
 import net.memeland.bsf.util.BiomeTemperatureHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -17,8 +17,8 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BlockStateProperties;
 import net.minecraft.world.level.block.state.properties.DoubleBlockHalf;
 import net.minecraft.world.level.chunk.ChunkAccess;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelProperty;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -67,7 +67,7 @@ public class SnowyPlantBakedModel implements BakedModel {
         int variantIndex = -2;
 
 
-        if (!ModConfig.ENABLE_PLANT_SNOW_LAYERS.get()) {
+        if (!ModConfigs.ENABLE_PLANT_SNOW_LAYERS.get()) {
             return modelData.derive()
                     .with(VARIANT_INDEX, variantIndex)
                     .build();

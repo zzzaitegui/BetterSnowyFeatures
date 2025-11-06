@@ -1,5 +1,6 @@
 package net.memeland.bsf.client.model;
 
+import net.memeland.bsf.ModConfigs;
 import net.memeland.bsf.util.BiomeTemperatureHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.BakedQuad;
@@ -13,8 +14,8 @@ import net.minecraft.tags.BlockTags;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.level.BlockAndTintGetter;
 import net.minecraft.world.level.block.state.BlockState;
-import net.minecraftforge.client.model.data.ModelData;
-import net.minecraftforge.client.model.data.ModelProperty;
+import net.neoforged.neoforge.client.model.data.ModelData;
+import net.neoforged.neoforge.client.model.data.ModelProperty;
 import org.jetbrains.annotations.Nullable;
 
 import it.unimi.dsi.fastutil.longs.Long2ObjectMap;
@@ -61,8 +62,7 @@ public class SnowOverlayBakedModel implements BakedModel {
     }
 
     @Override
-    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, RandomSource random,
-                                    ModelData extraData, @Nullable net.minecraft.client.renderer.RenderType renderType) {
+    public List<BakedQuad> getQuads(@Nullable BlockState state, @Nullable Direction direction, RandomSource random, ModelData extraData, @Nullable net.minecraft.client.renderer.RenderType renderType) {
         Boolean hasSnowAbove = extraData.get(HAS_SNOW_ABOVE);
 
         if (hasSnowAbove != null && hasSnowAbove && direction != null && direction.getAxis().isHorizontal()) {
@@ -74,7 +74,7 @@ public class SnowOverlayBakedModel implements BakedModel {
 
     @Override
     public ModelData getModelData(BlockAndTintGetter level, BlockPos pos, BlockState state, ModelData modelData) {
-        if (!net.memeland.bsf.ModConfig.ENABLE_SNOW_OVERLAY.get()) {
+        if (!ModConfigs.ENABLE_SNOW_OVERLAY.get()) {
             return modelData.derive().with(HAS_SNOW_ABOVE, false).build();
         }
 
@@ -168,11 +168,5 @@ public class SnowOverlayBakedModel implements BakedModel {
     @Override
     public ItemOverrides getOverrides() {
         return baseModel.getOverrides();
-    }
-
-    public net.minecraftforge.client.ChunkRenderTypeSet getRenderTypes(BlockState state, RandomSource rand, ModelData data) {
-        return net.minecraftforge.client.ChunkRenderTypeSet.of(
-                net.minecraft.client.renderer.RenderType.solid()
-        );
     }
 }

@@ -1,0 +1,13 @@
+{
+  "required": true,
+  "package": "net.memeland.bsf.mixin",
+  "compatibilityLevel": "JAVA_21",
+  "refmap": "bsf.refmap.json",
+  "minVersion": "0.8",
+  "client": [
+    "BushBlockOffsetMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

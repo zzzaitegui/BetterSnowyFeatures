@@ -1,0 +1,18 @@
+{
+  "ambientocclusion": false,
+  "textures": {
+    "particle": "bsf:block/snowy_vine",
+    "vine": "bsf:block/snowy_vine"
+  },
+  "elements": [
+    {
+      "from": [ 15.2, 0, 0 ],
+      "to": [ 15.2, 16, 16 ],
+      "shade": false,
+      "faces": {
+        "west": { "uv": [ 16, 0, 0, 16 ], "texture": "#vine" },
+        "east": { "uv": [ 0, 0, 16, 16 ], "texture": "#vine" }
+      }
+    }
+  ]
+}

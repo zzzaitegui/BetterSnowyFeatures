@@ -14,15 +14,18 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = mod_version
-group = mod_group_id
+version = '1.0.3-1.21.1-CLIENT'
+group = 'net.memeland.bsf'
 
 repositories {
     // Add here additional repositories if required by some of the dependencies below.
+    maven {
+        url = 'https://repo.spongepowered.org/repository/maven-public/'
+    }
 }
 
 base {
-    archivesName = mod_id
+    archivesName = 'BetterSnowyFeatures'
 }
 
 // Mojang ships Java 21 to end users in 1.21.1, so mods should target Java 21.
@@ -111,6 +114,14 @@ configurations {
     runtimeClasspath.extendsFrom localRuntime
 }
 
+jar {
+    manifest {
+        attributes([
+                'MixinConfigs': 'bsf.mixins.json'
+        ])
+    }
+}
+
 dependencies {
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
@@ -133,21 +144,23 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation 'org.spongepowered:mixin:0.8.5'
 }
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
-            minecraft_version      : minecraft_version,
-            minecraft_version_range: minecraft_version_range,
+            minecraft_version      : '1.21.1',
+            minecraft_version_range: '[1.21.1,1.22)',
             neo_version            : neo_version,
             loader_version_range   : loader_version_range,
-            mod_id                 : mod_id,
-            mod_name               : mod_name,
-            mod_license            : mod_license,
+            mod_id                 : 'bsf',
+            mod_name               : 'Better Snowy Features',
+            mod_license            : 'MIT License',
             mod_version            : mod_version,
-            mod_authors            : mod_authors,
+            mod_authors            : 'zzaitegui',
             mod_description        : mod_description
     ]
     inputs.properties replaceProperties

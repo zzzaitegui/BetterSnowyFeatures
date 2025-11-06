@@ -1,6 +1,6 @@
 package net.memeland.bsf.mixin;
 
-import net.memeland.bsf.ModConfig;
+import net.memeland.bsf.ModConfigs;
 import net.memeland.bsf.util.BiomeTemperatureHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.BlockPos;
@@ -22,7 +22,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  * Disables vanilla plant offset for grass/fern blocks when they're using snowy variants.
  * This works with both vanilla rendering AND Embeddium/Sodium optimized rendering.
  */
-@Mixin(BlockBehaviour.BlockStateBase.class)
+@Mixin(value = BlockBehaviour.BlockStateBase.class, remap = false)
 public abstract class BushBlockOffsetMixin {
 
     @Shadow
@@ -42,7 +42,7 @@ public abstract class BushBlockOffsetMixin {
             return;
         }
 
-        if (!ModConfig.ENABLE_PLANT_SNOW_LAYERS.get()) {
+        if (!ModConfigs.ENABLE_PLANT_SNOW_LAYERS.get()) {
             return;
         }
 

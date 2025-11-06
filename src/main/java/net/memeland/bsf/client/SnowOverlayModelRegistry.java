@@ -4,19 +4,15 @@ import net.memeland.bsf.BetterSnowyFeaturesMod;
 import net.memeland.bsf.client.model.SnowOverlayBakedModel;
 import net.minecraft.client.resources.model.BakedModel;
 import net.minecraft.client.resources.model.ModelResourceLocation;
+import net.minecraft.core.registries.BuiltInRegistries;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.world.level.block.Block;
 import net.minecraft.world.level.block.Blocks;
-import net.minecraftforge.api.distmarker.Dist;
-import net.minecraftforge.client.event.ModelEvent;
-import net.minecraftforge.eventbus.api.SubscribeEvent;
-import net.minecraftforge.fml.common.Mod;
+import net.neoforged.neoforge.client.event.ModelEvent;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@SuppressWarnings("removal")
-@Mod.EventBusSubscriber(modid = BetterSnowyFeaturesMod.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD, value = Dist.CLIENT)
 public class SnowOverlayModelRegistry {
 
     private static final Block[] OVERLAY_BLOCKS = {
@@ -39,20 +35,16 @@ public class SnowOverlayModelRegistry {
         SNOWY_TEXTURE_MODELS.put("pumpkin", ResourceLocation.fromNamespaceAndPath(BetterSnowyFeaturesMod.MOD_ID, "block/snowy_pumpkin"));
     }
 
-    @SubscribeEvent
-    public static void onRegisterAdditional(ModelEvent.RegisterAdditional event) {
+    public static void registerAdditionalModels(ModelEvent.RegisterAdditional event) {
         for (ResourceLocation modelLoc : SNOWY_TEXTURE_MODELS.values()) {
-            event.register(new ModelResourceLocation(modelLoc, ""));
+            event.register(new ModelResourceLocation(modelLoc, "standalone"));
         }
     }
 
-    @SubscribeEvent
-    public static void onModelBake(ModelEvent.ModifyBakingResult event) {
-        Map<ModelResourceLocation, BakedModel> modelRegistry = event.getModels();
-
+    public static void replaceSnowOverlayModels(Map<ModelResourceLocation, BakedModel> modelRegistry) {
         Map<String, BakedModel> snowyModels = new HashMap<>();
         for (Map.Entry<String, ResourceLocation> entry : SNOWY_TEXTURE_MODELS.entrySet()) {
-            BakedModel snowyModel = modelRegistry.get(new ModelResourceLocation(entry.getValue(), ""));
+            BakedModel snowyModel = modelRegistry.get(new ModelResourceLocation(entry.getValue(), "standalone"));
             if (snowyModel != null) {
                 snowyModels.put(entry.getKey(), snowyModel);
             }
@@ -80,6 +72,6 @@ public class SnowOverlayModelRegistry {
     }
 
     private static String getBlockName(Block block) {
-        return net.minecraftforge.registries.ForgeRegistries.BLOCKS.getKey(block).getPath();
+        return BuiltInRegistries.BLOCK.getKey(block).getPath();
     }
 }

@@ -1,6 +1,6 @@
 package net.memeland.bsf.util;
 
-import net.memeland.bsf.ModConfig;
+import net.memeland.bsf.ModConfigs;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.resources.ResourceLocation;
@@ -33,14 +33,14 @@ public class BiomeTemperatureHelper {
         Holder<Biome> biomeHolder = level.getBiome(pos);
         ResourceLocation biomeId = getBiomeId(biomeHolder);
 
-        if (isInList(biomeId, ModConfig.SNOWY_BIOMES_BLACKLIST.get())) {
+        if (isInList(biomeId, ModConfigs.SNOWY_BIOMES_BLACKLIST.get())) {
             synchronized (cacheLock) {
                 cacheResult(chunkKey, false);
             }
             return false;
         }
 
-        if (isInList(biomeId, ModConfig.SNOWY_BIOMES.get())) {
+        if (isInList(biomeId, ModConfigs.SNOWY_BIOMES.get())) {
             synchronized (cacheLock) {
                 cacheResult(chunkKey, true);
             }
@@ -48,7 +48,7 @@ public class BiomeTemperatureHelper {
         }
 
         boolean isCold = false;
-        if (ModConfig.USE_TEMPERATURE_FALLBACK.get()) {
+        if (ModConfigs.USE_TEMPERATURE_FALLBACK.get()) {
             Biome biome = biomeHolder.value();
             isCold = biome.coldEnoughToSnow(pos) &&
                     biome.getPrecipitationAt(pos) == Biome.Precipitation.SNOW;
@@ -76,7 +76,7 @@ public class BiomeTemperatureHelper {
         Holder<Biome> biomeHolder = level.getBiome(pos);
         ResourceLocation biomeId = getBiomeId(biomeHolder);
 
-        boolean isSnowBlock = isInList(biomeId, ModConfig.SNOW_BLOCK_BIOMES.get());
+        boolean isSnowBlock = isInList(biomeId, ModConfigs.SNOW_BLOCK_BIOMES.get());
 
         synchronized (cacheLock) {
             cacheSnowBlockResult(chunkKey, isSnowBlock);
