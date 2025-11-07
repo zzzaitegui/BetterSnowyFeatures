@@ -1,6 +1,7 @@
 package net.memeland.bsf;
 
 import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
@@ -12,6 +13,7 @@ public class ModConfigs {
     public static final ModConfigSpec.BooleanValue ENABLE_PLANT_SNOW_LAYERS;
     public static final ModConfigSpec.BooleanValue USE_TEMPERATURE_FALLBACK;
     public static final ModConfigSpec.BooleanValue ENABLE_SNOW_OVERLAY;
+    public static final ModConfigSpec.BooleanValue ENABLE_ICICLES;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> SNOWY_BIOMES;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> SNOWY_BIOMES_BLACKLIST;
     public static final ModConfigSpec.ConfigValue<List<? extends String>> SNOW_BLOCK_BIOMES;
@@ -29,6 +31,10 @@ public class ModConfigs {
                         "Adds a small snow edge to sides of blocks like stone, dirt, wood when snow is above them",
                         "Only works in cold biomes for performance optimization. It is recommended to use with Embeddium or other optimization mods.")
                 .define("enableSnowOverlay", false);
+
+        ENABLE_ICICLES = BUILDER
+                .comment("Enable icicle generation on trees in cold biomes")
+                .define("enableIcicles", true);
 
         BUILDER.pop();
 
@@ -118,6 +124,6 @@ public class ModConfigs {
     }
 
     public static void register() {
-        ModLoadingContext.get().getActiveContainer().registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, SPEC);
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, SPEC);
     }
 }

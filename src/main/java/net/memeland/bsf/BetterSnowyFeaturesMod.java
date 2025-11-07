@@ -1,7 +1,12 @@
 package net.memeland.bsf;
 
+import net.memeland.bsf.block.ModBlocks;
 import net.memeland.bsf.client.model.SnowOverlayBakedModel;
+import net.memeland.bsf.item.ModCreativeModeTab;
+import net.memeland.bsf.item.ModItems;
 import net.memeland.bsf.util.BiomeTemperatureHelper;
+import net.minecraft.client.renderer.ItemBlockRenderTypes;
+import net.minecraft.client.renderer.RenderType;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.bus.api.SubscribeEvent;
@@ -22,6 +27,10 @@ public class BetterSnowyFeaturesMod {
     public BetterSnowyFeaturesMod(IEventBus modEventBus) {
         ModConfigs.register();
 
+        ModBlocks.register(modEventBus);
+        ModItems.register(modEventBus);
+        ModCreativeModeTab.CREATIVE_MODE_TABS.register(modEventBus);
+
         modEventBus.addListener(this::commonSetup);
     }
 
@@ -35,6 +44,7 @@ public class BetterSnowyFeaturesMod {
         @SubscribeEvent
         public static void onClientSetup(FMLClientSetupEvent event) {
             event.enqueueWork(() -> {
+                ItemBlockRenderTypes.setRenderLayer(ModBlocks.ICICLE.get(), RenderType.translucent());
             });
         }
     }
