@@ -159,7 +159,7 @@ var generateModMetadata = tasks.register("generateModMetadata", ProcessResources
             mod_id                 : 'bsf',
             mod_name               : 'Better Snowy Features',
             mod_license            : 'MIT License',
-            mod_version            : mod_version,
+            mod_version            : '1.0.3',
             mod_authors            : 'zzaitegui',
             mod_description        : mod_description
     ]
