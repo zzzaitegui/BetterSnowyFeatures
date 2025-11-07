@@ -14,15 +14,15 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = mod_version
-group = mod_group_id
+version = '1.0.3-1.20.1-Neo-FULL'
+group = 'net.memeland.bsf'
 
 repositories {
     mavenLocal()
 }
 
 base {
-    archivesName = mod_id
+    archivesName = 'BetterSnowyFeatures'
 }
 
 // Mojang ships Java 17 to end users in 1.20.1, so mods should target Java 17.
@@ -115,10 +115,16 @@ obfuscation {
     createRemappingConfiguration(configurations.localRuntime)
 }
 
+// Mixin configuration
+mixin {
+    add sourceSets.main, "${mod_id}.refmap.json"
+    config "${mod_id}.mixins.json"
+}
+
 dependencies {
     // If you wish to declare dependencies against mods, make sure to use the 'mod*' configurations so that they're remapped.
 	// See https://github.com/neoforged/ModDevGradle/blob/main/LEGACY.md#remapping-mod-dependencies for more information.
-	
+
     // Example optional mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // modCompileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"
@@ -140,40 +146,37 @@ dependencies {
     // For more info:
     // http://www.gradle.org/docs/current/userguide/artifact_dependencies_tutorial.html
     // http://www.gradle.org/docs/current/userguide/dependency_management.html
-}
 
-// Uncomment the lines below if you wish to configure mixin. The mixin file should be named modid.mixins.json.
-/*
-mixin {
-    add sourceSets.main, "${mod_id}.refmap.json"
-    config "${mod_id}.mixins.json"
-}
-
-dependencies {
+    // Mixin dependencies
     annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+    implementation 'org.spongepowered:mixin:0.8.5'
+
+    // JetBrains annotations for @Nullable support
+    compileOnly 'org.jetbrains:annotations:24.0.1'
 }
 
 jar {
-    manifest.attributes([
-            "MixinConfigs": "${mod_id}.mixins.json"
-    ])
+    manifest {
+        attributes([
+                'MixinConfigs': 'bsf.mixins.json'
+        ])
+    }
 }
-*/
 
 // This block of code expands all declared replace properties in the specified resource targets.
 // A missing property will result in an error. Properties are expanded using ${} Groovy notation.
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
     var replaceProperties = [
-            minecraft_version        : minecraft_version,
-            minecraft_version_range  : minecraft_version_range,
+            minecraft_version        : '1.20.1',
+            minecraft_version_range  : '[1.20.1,1.21)',
             forge_version            : forge_version,
             forge_version_range      : forge_version_range,
             loader_version_range     : loader_version_range,
-            mod_id                   : mod_id,
-            mod_name                 : mod_name,
-            mod_license              : mod_license,
+            mod_id                   : 'bsf',
+            mod_name                 : 'Better Snowy Features',
+            mod_license              : 'MIT License',
             mod_version              : mod_version,
-            mod_authors              : mod_authors,
+            mod_authors              : 'zzaitegui',
             mod_description          : mod_description
     ]
     inputs.properties replaceProperties
