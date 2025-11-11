@@ -171,12 +171,30 @@ public class ClientEventHandler {
         for (Map.Entry<String, ResourceLocation> entry : SNOWY_FOLIAGE_MODELS.entrySet()) {
             String blockName = entry.getKey();
             ResourceLocation customModelLocation = entry.getValue();
-            replaceFoliageBlock(modelRegistry, blockName, customModelLocation);
+            replaceFoliageBlock(modelRegistry, "minecraft", blockName, customModelLocation);
+            replaceFoliageBlock(modelRegistry, "dynamictrees", blockName, customModelLocation);
+        }
+
+        replaceDynamicTreesUndergrowthLeaves(modelRegistry);
+    }
+
+    private static void replaceDynamicTreesUndergrowthLeaves(Map<ResourceLocation, BakedModel> modelRegistry) {
+        Map<String, ResourceLocation> undergrowthMapping = new HashMap<>();
+        undergrowthMapping.put("oak_undergrowth_leaves", SNOWY_FOLIAGE_MODELS.get("oak_leaves"));
+        undergrowthMapping.put("jungle_undergrowth_leaves", SNOWY_FOLIAGE_MODELS.get("jungle_leaves"));
+
+        for (Map.Entry<String, ResourceLocation> entry : undergrowthMapping.entrySet()) {
+            String undergrowthName = entry.getKey();
+            ResourceLocation snowyModelLocation = entry.getValue();
+
+            if (snowyModelLocation != null) {
+                replaceFoliageBlock(modelRegistry, "dynamictrees", undergrowthName, snowyModelLocation);
+            }
         }
     }
 
-    private static void replaceFoliageBlock(Map<ResourceLocation, BakedModel> modelRegistry, String blockName,
-                                            ResourceLocation customModelLocation) {
+    private static void replaceFoliageBlock(Map<ResourceLocation, BakedModel> modelRegistry, String namespace,
+                                            String blockName, ResourceLocation customModelLocation) {
         BakedModel customSnowy = modelRegistry.get(customModelLocation);
         if (customSnowy == null) return;
 
@@ -184,7 +202,7 @@ public class ClientEventHandler {
             ResourceLocation key = entry.getKey();
 
             if (key instanceof ModelResourceLocation mrl) {
-                if (mrl.getNamespace().equals("minecraft") && mrl.getPath().equals(blockName)) {
+                if (mrl.getNamespace().equals(namespace) && mrl.getPath().equals(blockName)) {
                     BakedModel originalModel = entry.getValue();
                     SnowyFoliageBakedModel customModel = new SnowyFoliageBakedModel(originalModel, customSnowy);
                     modelRegistry.put(key, customModel);
