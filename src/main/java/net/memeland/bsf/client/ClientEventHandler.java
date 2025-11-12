@@ -177,19 +177,46 @@ public class ClientEventHandler {
         for (Map.Entry<String, ResourceLocation> entry : SNOWY_FOLIAGE_MODELS.entrySet()) {
             String blockName = entry.getKey();
             ResourceLocation customModelLocation = entry.getValue();
-            replaceFoliageBlock(modelRegistry, blockName, customModelLocation);
+            // Wrap vanilla leaves
+            replaceFoliageBlock(modelRegistry, blockName, customModelLocation, "minecraft");
+            // Wrap Dynamic Trees leaves
+            replaceFoliageBlock(modelRegistry, blockName, customModelLocation, "dynamictrees");
         }
+        // Handle Dynamic Trees undergrowth leaves
+        replaceDynamicTreesUndergrowthLeaves(modelRegistry);
     }
 
-    private static void replaceFoliageBlock(Map<ModelResourceLocation, BakedModel> modelRegistry, String blockName,
-                                            ResourceLocation customModelLocation) {
+    private static void replaceDynamicTreesUndergrowthLeaves(Map<ModelResourceLocation, BakedModel> modelRegistry) {
+        // Map undergrowth leaves to their vanilla snowy texture counterparts
+        replaceUndergrowthLeaf(modelRegistry, "oak_undergrowth_leaves", SNOWY_FOLIAGE_MODELS.get("oak_leaves"));
+        replaceUndergrowthLeaf(modelRegistry, "jungle_undergrowth_leaves", SNOWY_FOLIAGE_MODELS.get("jungle_leaves"));
+    }
+
+    private static void replaceUndergrowthLeaf(Map<ModelResourceLocation, BakedModel> modelRegistry, String undergrowthName,
+                                                ResourceLocation customModelLocation) {
         BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(customModelLocation, "standalone"));
         if (customSnowy == null) return;
 
         for (Map.Entry<ModelResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
             ModelResourceLocation mrl = entry.getKey();
 
-            if (mrl.id().getNamespace().equals("minecraft") && mrl.id().getPath().equals(blockName)) {
+            if (mrl.id().getNamespace().equals("dynamictrees") && mrl.id().getPath().equals(undergrowthName)) {
+                BakedModel originalModel = entry.getValue();
+                SnowyFoliageBakedModel customModel = new SnowyFoliageBakedModel(originalModel, customSnowy);
+                modelRegistry.put(mrl, customModel);
+            }
+        }
+    }
+
+    private static void replaceFoliageBlock(Map<ModelResourceLocation, BakedModel> modelRegistry, String blockName,
+                                            ResourceLocation customModelLocation, String namespace) {
+        BakedModel customSnowy = modelRegistry.get(new ModelResourceLocation(customModelLocation, "standalone"));
+        if (customSnowy == null) return;
+
+        for (Map.Entry<ModelResourceLocation, BakedModel> entry : modelRegistry.entrySet()) {
+            ModelResourceLocation mrl = entry.getKey();
+
+            if (mrl.id().getNamespace().equals(namespace) && mrl.id().getPath().equals(blockName)) {
                 BakedModel originalModel = entry.getValue();
                 SnowyFoliageBakedModel customModel = new SnowyFoliageBakedModel(originalModel, customSnowy);
                 modelRegistry.put(mrl, customModel);
