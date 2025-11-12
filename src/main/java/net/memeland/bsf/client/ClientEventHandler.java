@@ -174,12 +174,22 @@ public class ClientEventHandler {
         for (Map.Entry<String, ResourceLocation> entry : SNOWY_FOLIAGE_MODELS.entrySet()) {
             String blockName = entry.getKey();
             ResourceLocation customModelLocation = entry.getValue();
-            replaceFoliageBlock(modelRegistry, blockName, customModelLocation);
+            replaceFoliageBlock(modelRegistry, blockName, customModelLocation, "minecraft");
+            replaceFoliageBlock(modelRegistry, blockName, customModelLocation, "dynamictrees");
         }
+        replaceDynamicTreesUndergrowthLeaves(modelRegistry);
+    }
+
+    private static void replaceDynamicTreesUndergrowthLeaves(Map<ResourceLocation, BakedModel> modelRegistry) {
+        ResourceLocation oakSnowyModel = SNOWY_FOLIAGE_MODELS.get("oak_leaves");
+        replaceFoliageBlock(modelRegistry, "oak_undergrowth_leaves", oakSnowyModel, "dynamictrees");
+
+        ResourceLocation jungleSnowyModel = SNOWY_FOLIAGE_MODELS.get("jungle_leaves");
+        replaceFoliageBlock(modelRegistry, "jungle_undergrowth_leaves", jungleSnowyModel, "dynamictrees");
     }
 
     private static void replaceFoliageBlock(Map<ResourceLocation, BakedModel> modelRegistry, String blockName,
-                                            ResourceLocation customModelLocation) {
+                                            ResourceLocation customModelLocation, String namespace) {
         BakedModel customSnowy = modelRegistry.get(customModelLocation);
         if (customSnowy == null) return;
 
@@ -187,7 +197,7 @@ public class ClientEventHandler {
             ResourceLocation key = entry.getKey();
 
             if (key instanceof ModelResourceLocation mrl) {
-                if (mrl.getNamespace().equals("minecraft") && mrl.getPath().equals(blockName)) {
+                if (mrl.getNamespace().equals(namespace) && mrl.getPath().equals(blockName)) {
                     BakedModel originalModel = entry.getValue();
                     SnowyFoliageBakedModel customModel = new SnowyFoliageBakedModel(originalModel, customSnowy);
                     modelRegistry.put(key, customModel);
