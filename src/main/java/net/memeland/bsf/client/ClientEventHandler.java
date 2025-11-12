@@ -122,7 +122,6 @@ public class ClientEventHandler {
             }
         }
 
-        // Register snow overlay models
         SnowOverlayModelRegistry.registerAdditionalModels(event);
     }
 
@@ -137,7 +136,6 @@ public class ClientEventHandler {
         replacePlantModels(modelRegistry);
         replaceTallPlantModels(modelRegistry);
 
-        // Replace snow overlay models
         SnowOverlayModelRegistry.replaceSnowOverlayModels(modelRegistry);
     }
 
@@ -177,17 +175,13 @@ public class ClientEventHandler {
         for (Map.Entry<String, ResourceLocation> entry : SNOWY_FOLIAGE_MODELS.entrySet()) {
             String blockName = entry.getKey();
             ResourceLocation customModelLocation = entry.getValue();
-            // Wrap vanilla leaves
             replaceFoliageBlock(modelRegistry, blockName, customModelLocation, "minecraft");
-            // Wrap Dynamic Trees leaves
             replaceFoliageBlock(modelRegistry, blockName, customModelLocation, "dynamictrees");
         }
-        // Handle Dynamic Trees undergrowth leaves
         replaceDynamicTreesUndergrowthLeaves(modelRegistry);
     }
 
     private static void replaceDynamicTreesUndergrowthLeaves(Map<ModelResourceLocation, BakedModel> modelRegistry) {
-        // Map undergrowth leaves to their vanilla snowy texture counterparts
         replaceUndergrowthLeaf(modelRegistry, "oak_undergrowth_leaves", SNOWY_FOLIAGE_MODELS.get("oak_leaves"));
         replaceUndergrowthLeaf(modelRegistry, "jungle_undergrowth_leaves", SNOWY_FOLIAGE_MODELS.get("jungle_leaves"));
     }
