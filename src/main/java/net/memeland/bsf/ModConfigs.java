@@ -1,6 +1,7 @@
 package net.memeland.bsf;
 
 import net.neoforged.fml.ModLoadingContext;
+import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.ModConfigSpec;
 
 import java.util.List;
@@ -118,6 +119,6 @@ public class ModConfigs {
     }
 
     public static void register() {
-        ModLoadingContext.get().getActiveContainer().registerConfig(net.neoforged.fml.config.ModConfig.Type.CLIENT, SPEC);
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.CLIENT, SPEC, "bettersnowyfeatures-common.toml");
     }
 }
