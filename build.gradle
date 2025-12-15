@@ -14,7 +14,7 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = '1.0.4-1.21.1-Neo-FULL'
+version = '1.0.5-1.21.1-Neo-FULL'
 group = 'net.memeland.bsf'
 
 repositories {

@@ -124,6 +124,6 @@ public class ModConfigs {
     }
 
     public static void register() {
-        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, SPEC);
+        ModLoadingContext.get().getActiveContainer().registerConfig(ModConfig.Type.COMMON, SPEC, "bettersnowyfeatures-common.toml");
     }
 }
